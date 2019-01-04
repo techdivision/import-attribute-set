@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <service id="import_attribute_set.repository.sql.statement" class="TechDivision\Import\Attribute\Set\Repositories\SqlStatementRepository"/>
+
+        <service id="import_attribute_set.action.processor.eav.attribute.set.create" class="TechDivision\Import\Attribute\Set\Actions\Processors\EavAttributeSetCreateProcessor">
+            <argument type="service" id="connection"/>
+            <argument type="service" id="import_attribute_set.repository.sql.statement"/>
+        </service>
+        <service id="import_attribute_set.action.processor.eav.attribute.set.update" class="TechDivision\Import\Attribute\Set\Actions\Processors\EavAttributeSetUpdateProcessor">
+            <argument type="service" id="connection"/>
+            <argument type="service" id="import_attribute_set.repository.sql.statement"/>
+        </service>
+        <service id="import_attribute_set.action.processor.eav.attribute.set.delete" class="TechDivision\Import\Attribute\Set\Actions\Processors\EavAttributeSetDeleteProcessor">
+            <argument type="service" id="connection"/>
+            <argument type="service" id="import_attribute_set.repository.sql.statement"/>
+        </service>
+        <service id="import_attribute_set.action.processor.eav.attribute.group.create" class="TechDivision\Import\Attribute\Set\Actions\Processors\EavAttributeGroupCreateProcessor">
+            <argument type="service" id="connection"/>
+            <argument type="service" id="import_attribute_set.repository.sql.statement"/>
+        </service>
+        <service id="import_attribute_set.action.processor.eav.attribute.group.update" class="TechDivision\Import\Attribute\Set\Actions\Processors\EavAttributeGroupUpdateProcessor">
+            <argument type="service" id="connection"/>
+            <argument type="service" id="import_attribute_set.repository.sql.statement"/>
+        </service>
+        <service id="import_attribute_set.action.processor.eav.attribute.group.delete" class="TechDivision\Import\Attribute\Set\Actions\Processors\EavAttributeGroupDeleteProcessor">
+            <argument type="service" id="connection"/>
+            <argument type="service" id="import_attribute_set.repository.sql.statement"/>
+        </service>
+
+        <service id="import_attribute_set.action.eav.attribute.set" class="TechDivision\Import\Attribute\Set\Actions\EavAttributeSetAction">
+            <argument type="service" id="import_attribute_set.action.processor.attribute.set.create"/>
+            <argument type="service" id="import_attribute_set.action.processor.attribute.set.update"/>
+            <argument type="service" id="import_attribute_set.action.processor.attribute.set.delete"/>
+        </service>
+        <service id="import_attribute_set.action.eav.attribute.group" class="TechDivision\Import\Attribute\Set\Actions\EavAttributeGroupAction">
+            <argument type="service" id="import_attribute_set.action.processor.attribute.group.create"/>
+            <argument type="service" id="import_attribute_set.action.processor.attribute.group.update"/>
+            <argument type="service" id="import_attribute_set.action.processor.attribute.group.delete"/>
+        </service>
+
+        <service id="import_attribute_set.observer.clear.attribute.set" class="TechDivision\Import\Attribute\Set\Observers\ClearAttributeSetObserver">
+            <argument type="service" id="import_attribute_set.processor.attribute.set.bunch"/>
+        </service>
+        <service id="import_attribute_set.observer.attribute.set.clean.up" class="TechDivision\Import\Attribute\Set\Observers\AttributeSetCleanUpObserver">
+            <argument type="service" id="import_attribute_set.processor.attribute.set.bunch"/>
+        </service>
+        <service id="import_attribute_set.observer.attribute.set" class="TechDivision\Import\Attribute\Set\Observers\AttributeSetObserver">
+            <argument type="service" id="import_attribute_set.processor.attribute.set.bunch"/>
+        </service>
+        <service id="import_attribute_set.observer.attribute.set.update" class="TechDivision\Import\Attribute\Set\Observers\AttributeSetUpdateObserver">
+            <argument type="service" id="import_attribute_set.processor.attribute.set.bunch"/>
+        </service>
+        <service id="import_attribute_set.observer.attribute.group" class="TechDivision\Import\Attribute\SetObservers\AttributeGroupObserver">
+            <argument type="service" id="import_attribute_set.processor.attribute.set.bunch"/>
+        </service>
+        <service id="import_attribute_set.observer.attribute.group.update" class="TechDivision\Import\Attribute\Set\Observers\AttributeGroupUpdateObserver">
+            <argument type="service" id="import_attribute_set.processor.attribute.set.bunch"/>
+        </service>
+
+        <service id="import_attribute_set.processor.attribute.set.bunch" class="TechDivision\Import\Attribute\Set\Services\AttributeSetBunchProcessor">
+            <argument type="service" id="connection"/>
+            <argument type="service" id="import.repository.eav.attribute.set"/>
+            <argument type="service" id="import.repository.eav.attribute.group"/>
+            <argument type="service" id="import_attribute_set.action.eav.attribute.set"/>
+            <argument type="service" id="import_attribute_set.action.eav.attribute.group"/>
+        </service>
+
+        <service id="import_attribute_set.subject.bunch" class="TechDivision\Import\Attribute\Set\Subjects\BunchSubject" shared="false">
+            <argument type="service" id="import.processor.registry"/>
+            <argument type="service" id="import.generator.core.config.data.uid"/>
+            <argument type="service" id="loggers"/>
+            <argument type="service" id="import.events.emitter"/>
+        </service>
+
+    </services>
+
+</container>
