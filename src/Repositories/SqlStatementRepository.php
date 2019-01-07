@@ -70,7 +70,7 @@ class SqlStatementRepository extends \TechDivision\Import\Repositories\SqlStatem
                     attribute_set_name = :attribute_set_name,
                     sort_order = :sort_order
               WHERE attribute_set_id = :attribute_set_id',
-        SqlStatementKeys::UPDATE_ATTRIBUTE_SET =>
+        SqlStatementKeys::UPDATE_ATTRIBUTE_GROUP =>
             'UPDATE eav_attribute_group
                 SET attribute_set_id = :attribute_set_id,
                     attribute_group_name = :attribute_group_name,
@@ -81,7 +81,7 @@ class SqlStatementRepository extends \TechDivision\Import\Repositories\SqlStatem
               WHERE attribute_group_id = :attribute_group_id',
         SqlStatementKeys::DELETE_ATTRIBUTE_SET =>
             'DELETE FROM eav_attribute_set WHERE attribute_set_id = :attribute_set_id',
-        SqlStatementKeys::DELETE_ATTRIBUTE_SET =>
+        SqlStatementKeys::DELETE_ATTRIBUTE_GROUP =>
             'DELETE FROM eav_attribute_group WHERE attribute_group_id = :attribute_group_id'
     );
 

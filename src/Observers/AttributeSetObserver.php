@@ -20,9 +20,8 @@
 
 namespace TechDivision\Import\Attribute\Set\Observers;
 
-use TechDivision\Import\Attribute\Utils\ColumnKeys;
-use TechDivision\Import\Attribute\Utils\MemberNames;
-use TechDivision\Import\Attribute\Set\Services\AttributeSetBunchProcessorInterface;
+use TechDivision\Import\Attribute\Set\Utils\ColumnKeys;
+use TechDivision\Import\Attribute\Set\Utils\MemberNames;
 
 /**
  * Observer that create's the EAV attribute set itself.
@@ -61,8 +60,11 @@ class AttributeSetObserver extends AbstractAttributeSetObserver
         // prepare the attribue set values
         $attributeSet = $this->initializeAttribute($this->prepareAttributes());
 
-        // insert the entity and set the entity ID
-        $this->setLastAttributeSetId($this->persistAttribute($attributeSet));
+        // persist the values and set the new attribute set ID
+        $attributeSet[MemberNames::ATTRIBUTE_SET_ID] = $this->persistAttributeSet($this->initializeAttribute($this->prepareAttributes()));
+
+        // temporarily persist the attribute set for processing the attribute groups
+        $this->setLastAttributeSet($attributeSet);
     }
 
     /**
@@ -121,7 +123,7 @@ class AttributeSetObserver extends AbstractAttributeSetObserver
      *
      * @param array $attributeSet The attribute set to persist
      *
-     * @return void
+     * @return string The ID of the persisted attribute set
      */
     protected function persistAttributeSet(array $attributeSet)
     {

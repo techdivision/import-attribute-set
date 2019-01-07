@@ -1,7 +1,7 @@
 <?php
 
 /**
- * TechDivision\Import\Attribute\Set\Actions\Processors\AttributeSetCreateProcessor
+ * TechDivision\Import\Attribute\Set\Actions\Processors\EavAttributeSetDeleteProcessor
  *
  * NOTICE OF LICENSE
  *
@@ -21,10 +21,10 @@
 namespace TechDivision\Import\Attribute\Set\Actions\Processors;
 
 use TechDivision\Import\Attribute\Set\Utils\SqlStatementKeys;
-use TechDivision\Import\Actions\Processors\AbstractCreateProcessor;
+use TechDivision\Import\Actions\Processors\AbstractDeleteProcessor;
 
 /**
- * The EAV attribute set create processor implementation.
+ * The EAV attribute set delete processor implementation.
  *
  * @author    Tim Wagner <t.wagner@techdivision.com>
  * @copyright 2019 TechDivision GmbH <info@techdivision.com>
@@ -32,7 +32,7 @@ use TechDivision\Import\Actions\Processors\AbstractCreateProcessor;
  * @link      https://github.com/techdivision/import-attribute-set
  * @link      http://www.techdivision.com
  */
-class AttributeSetCreateProcessor extends AbstractCreateProcessor
+class EavAttributeSetDeleteProcessor extends AbstractDeleteProcessor
 {
 
     /**
@@ -46,21 +46,7 @@ class AttributeSetCreateProcessor extends AbstractCreateProcessor
 
         // return the array with the SQL statements that has to be prepared
         return array(
-            SqlStatementKeys::CREATE_ATTRIBUTE_SET => $this->loadStatement(SqlStatementKeys::CREATE_ATTRIBUTE_SET)
+            SqlStatementKeys::DELETE_ATTRIBUTE_SET => $this->loadStatement(SqlStatementKeys::DELETE_ATTRIBUTE_SET)
         );
-    }
-
-    /**
-     * Persist's the passed row.
-     *
-     * @param array       $row  The row to persist
-     * @param string|null $name The name of the prepared statement that has to be executed
-     *
-     * @return string The last inserted ID
-     */
-    public function execute($row, $name = null)
-    {
-        parent::execute($row, $name);
-        return $this->getConnection()->lastInsertId();
     }
 }

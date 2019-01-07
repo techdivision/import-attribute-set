@@ -44,10 +44,10 @@ class AttributeGroupObserver extends AbstractAttributeSetObserver
     {
 
         // prepare the attribue set values
-        $attributeSet = $this->initializeAttribute($this->prepareAttributes());
+        $attributeSetGroup = $this->initializeAttribute($this->prepareAttributes());
 
-        // insert the entity and set the entity ID
-        $this->setLastAttributeSetId($this->persistAttribute($attributeSet));
+        // persist the entity
+        $this->persistAttributeGroup($attributeSetGroup);
     }
 
     /**
@@ -58,13 +58,11 @@ class AttributeGroupObserver extends AbstractAttributeSetObserver
     protected function prepareAttributes()
     {
 
-        // initialize the default ID
-        $defaultId = 0;
-
-        // load the attribute set by the given attribute set name
-        $attributeSet = $this->getAttributeSetByAttributeSetName($this->getValue(ColumnKeys::ATTRIBUTE_SET_NAME));
+        // load the last attribute set
+        $attributeSet = $this->getLastAttributeSet();
 
         // load the attribute set values from the column
+        $defaultId = $this->getValue(ColumnKeys::DEFAULT_ID, 0);
         $sortOrder = $this->getValue(ColumnKeys::ATTRIBUTE_GROUP_SORT_ORDER, 0);
         $tabGroupCode = $this->getValue(ColumnKeys::ATTRIBUTE_GROUP_TAB_GROUP_CODE);
         $attributeGroupName = $this->getValue(ColumnKeys::ATTRIBUTE_GROUP_NAME);
@@ -96,6 +94,16 @@ class AttributeGroupObserver extends AbstractAttributeSetObserver
     }
 
     /**
+     * Return's the entity type code to be used.
+     *
+     * @return string The entity type code to be used
+     */
+    protected function getEntityTypeCode()
+    {
+        return $this->getSubject()->getEntityTypeCode();
+    }
+
+    /**
      * Persist the passed attribute group.
      *
      * @param array $attributeGroup The attribute group to persist
@@ -105,18 +113,5 @@ class AttributeGroupObserver extends AbstractAttributeSetObserver
     protected function persistAttributeGroup(array $attributeGroup)
     {
         return $this->getAttributeSetBunchProcessor()->persistAttributeGroup($attributeGroup);
-    }
-
-    /**
-     * Return's the attribute set with the passed attribute set name.
-     *
-     * @param string $attributeSetName The name of the requested attribute set
-     *
-     * @return array The attribute set data
-     * @throws \Exception Is thrown, if the attribute set or the given entity type with the passed name is not available
-     */
-    protected function getAttributeSetByAttributeSetName($attributeSetName)
-    {
-        return $this->getSubject()->getAttributeSetByAttributeSetName($attributeSetName);
     }
 }

@@ -71,6 +71,16 @@ interface AttributeSetBunchProcessorInterface extends AttributeSetProcessorInter
     public function loadAttributeSetByEntityTypeCodeAndAttributeSetName($entityTypeCode, $attributeSetName);
 
     /**
+     * Load's and return's the EAV attribute set with the passed entity type ID and attribute set name.
+     *
+     * @param string $entityTypeId     The entity type ID of the EAV attribute set to load
+     * @param string $attributeSetName The attribute set name of the EAV attribute set to return
+     *
+     * @return array The EAV attribute set
+     */
+    public function loadAttributeSetByEntityTypeIdAndAttributeSetName($entityTypeId, $attributeSetName);
+
+    /**
      * Load's the EAV attribute group with the passed entity type code, attribute set and attribute group name.
      *
      * @param string $entityTypeCode     The entity type code of the EAV attribute group to return
@@ -79,7 +89,7 @@ interface AttributeSetBunchProcessorInterface extends AttributeSetProcessorInter
      *
      * @return array The EAV attribute group
      */
-    public function loadAttributeGroupByAttributeSetNameAndAttributeGroupName($entityTypeCode, $attributeSetName, $attributeGroupName);
+    public function loadAttributeGroupByEntityTypeCodeAndAttributeSetNameAndAttributeGroupName($entityTypeCode, $attributeSetName, $attributeGroupName);
 
     /**
      * Persist's the passed EAV attribute set data and return's the ID.
@@ -87,7 +97,7 @@ interface AttributeSetBunchProcessorInterface extends AttributeSetProcessorInter
      * @param array       $attributeSet The attribute set data to persist
      * @param string|null $name         The name of the prepared statement that has to be executed
      *
-     * @return string The ID of the persisted attribute
+     * @return string The ID of the persisted attribute set
      */
     public function persistAttributeSet(array $attributeSet, $name = null);
 

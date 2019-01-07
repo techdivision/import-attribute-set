@@ -75,18 +75,9 @@ interface BunchSubjectInterface
      * Return's the ID of the attribute set that has been created recently.
      *
      * @return integer The attribute set ID
-     * @see \TechDivision\Import\Attribute\Set\Subjects\BunchSubject::getLastAttributeId()
+     * @see \TechDivision\Import\Attribute\Set\Subjects\BunchSubject::getLastAttributeSetId()
      */
     public function getLastEntityId();
-
-    /**
-     * Set's the ID of the attribute set that has been created recently.
-     *
-     * @param integer $lastAttributeSetId The attribute set ID
-     *
-     * @return void
-     */
-    public function setLastAttributeSetId($lastAttributeSetId);
 
     /**
      * Return's the ID of the attribute set that has been created recently.
@@ -94,4 +85,20 @@ interface BunchSubjectInterface
      * @return integer The attribute set ID
      */
     public function getLastAttributeSetId();
+
+    /**
+     * Set's the attribute set that has been created recently.
+     *
+     * @param array $lastAttributeSet The attribute set
+     *
+     * @return void
+     */
+    public function setLastAttributeSet(array $lastAttributeSet);
+
+    /**
+     * Return's the attribute set that has been created recently.
+     *
+     * @return array The attribute set
+     */
+    public function getLastAttributeSet();
 }

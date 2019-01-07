@@ -1,7 +1,7 @@
 <?php
 
 /**
- * TechDivision\Import\Attribute\Set\Actions\Processors\AttributeGroupUpdateProcessor
+ * TechDivision\Import\Attribute\Set\Actions\Processors\EavAttributeGroupDeleteProcessor
  *
  * NOTICE OF LICENSE
  *
@@ -21,10 +21,10 @@
 namespace TechDivision\Import\Attribute\Set\Actions\Processors;
 
 use TechDivision\Import\Attribute\Set\Utils\SqlStatementKeys;
-use TechDivision\Import\Actions\Processors\AbstractUpdateProcessor;
+use TechDivision\Import\Actions\Processors\AbstractDeleteProcessor;
 
 /**
- * The EAV attribute group update processor implementation.
+ * The EAV attribute group delete processor implementation.
  *
  * @author    Tim Wagner <t.wagner@techdivision.com>
  * @copyright 2019 TechDivision GmbH <info@techdivision.com>
@@ -32,7 +32,7 @@ use TechDivision\Import\Actions\Processors\AbstractUpdateProcessor;
  * @link      https://github.com/techdivision/import-attribute-set
  * @link      http://www.techdivision.com
  */
-class AttributeGroupUpdateProcessor extends AbstractUpdateProcessor
+class EavAttributeGroupDeleteProcessor extends AbstractDeleteProcessor
 {
 
     /**
@@ -46,7 +46,7 @@ class AttributeGroupUpdateProcessor extends AbstractUpdateProcessor
 
         // return the array with the SQL statements that has to be prepared
         return array(
-            SqlStatementKeys::UPDATE_ATTRIBUTE_GROUP => $this->loadStatement(SqlStatementKeys::UPDATE_ATTRIBUTE_GROUP)
+            SqlStatementKeys::DELETE_ATTRIBUTE_GROUP => $this->loadStatement(SqlStatementKeys::DELETE_ATTRIBUTE_GROUP)
         );
     }
 }
