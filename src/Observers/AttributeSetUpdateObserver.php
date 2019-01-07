@@ -44,12 +44,12 @@ class AttributeSetUpdateObserver extends AttributeSetObserver
     protected function initializeAttribute(array $attr)
     {
 
-        // load the entity type code and the attribute set name
-        $entityTypeCode = $attr[MemberNames::ENTITY_TYPE_CODE];
+        // load the entity type ID and the attribute set name
+        $entityTypeId = $attr[MemberNames::ENTITY_TYPE_ID];
         $attributeSetName = $attr[MemberNames::ATTRIBUTE_SET_NAME];
 
         // try to load the EAV attribute set with the entity type code and the attribute set name
-        if ($entity = $this->loadAttributeSetByEntityTypeCodeAndAttributeSetName($entityTypeCode, $attributeSetName)) {
+        if ($entity = $this->loadAttributeSetByEntityTypeIdAndAttributeSetName($entityTypeId, $attributeSetName)) {
             return $this->mergeEntity($entity, $attr);
         }
 
@@ -58,15 +58,15 @@ class AttributeSetUpdateObserver extends AttributeSetObserver
     }
 
     /**
-     * Load's and return's the EAV attribute set with the passed entity type code and attribute set name.
+     * Load's and return's the EAV attribute set with the passed entity type ID and attribute set name.
      *
-     * @param string $entityTypeCode   The entity type code of the EAV attribute set to load
+     * @param string $entityTypeId     The entity type ID of the EAV attribute set to load
      * @param string $attributeSetName The attribute set name of the EAV attribute set to return
      *
      * @return array The EAV attribute set
      */
-    protected function loadAttributeSetByEntityTypeCodeAndAttributeSetName($entityTypeCode, $attributeSetName)
+    protected function loadAttributeSetByEntityTypeIdAndAttributeSetName($entityTypeId, $attributeSetName)
     {
-        return $this->getAttributeSetBunchProcessor()->loadAttributeSetByEntityTypeCodeAndAttributeSetName($entityTypeCode, $attributeSetName);
+        return $this->getAttributeSetBunchProcessor()->loadAttributeSetByEntityTypeIdAndAttributeSetName($entityTypeId, $attributeSetName);
     }
 }

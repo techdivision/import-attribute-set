@@ -20,8 +20,10 @@
 
 namespace TechDivision\Import\Attribute\Set\Subjects;
 
-use TechDivision\Import\Attribute\Utils\RegistryKeys;
+use TechDivision\Import\Utils\EntityTypeCodes;
 use TechDivision\Import\Subjects\AbstractEavSubject;
+use TechDivision\Import\Attribute\Utils\RegistryKeys;
+use TechDivision\Import\Attribute\Set\Utils\MemberNames;
 
 /**
  * The subject implementation that handles the business logic to persist attribute sets.
@@ -36,11 +38,11 @@ class BunchSubject extends AbstractEavSubject implements BunchSubjectInterface
 {
 
     /**
-     * The ID of the attribute set that has been created recently.
+     * The attribute set that has been processed recently.
      *
-     * @var integer
+     * @var array
      */
-    protected $lastAttributeSetId;
+    protected $lastAttributeSet = array();
 
     /**
      * The array with the available entity types.
@@ -62,6 +64,20 @@ class BunchSubject extends AbstractEavSubject implements BunchSubjectInterface
      * @var array
      */
     protected $entityTypeCodeAndAttributeSetNameIdMapping = array();
+
+    /**
+     * Mapping for the virtual entity type code to the real Magento 2 EAV entity type code.
+     *
+     * @var array
+     */
+    protected $entityTypeCodeMappings = array(
+        EntityTypeCodes::EAV_ATTRIBUTE             => EntityTypeCodes::CATALOG_PRODUCT,
+        EntityTypeCodes::EAV_ATTRIBUTE_SET         => EntityTypeCodes::CATALOG_PRODUCT,
+        EntityTypeCodes::CATALOG_PRODUCT           => EntityTypeCodes::CATALOG_PRODUCT,
+        EntityTypeCodes::CATALOG_CATEGORY          => EntityTypeCodes::CATALOG_CATEGORY,
+        EntityTypeCodes::CATALOG_PRODUCT_PRICE     => EntityTypeCodes::CATALOG_PRODUCT,
+        EntityTypeCodes::CATALOG_PRODUCT_INVENTORY => EntityTypeCodes::CATALOG_PRODUCT
+    );
 
     /**
      * Intializes the previously loaded global data for exactly one bunch.
@@ -94,6 +110,52 @@ class BunchSubject extends AbstractEavSubject implements BunchSubjectInterface
     public function getDefaultEntityTypeCode()
     {
         return $this->defaultEntityTypeCode;
+    }
+
+    /**
+     * Returns the entity type with the passed ID.
+     *
+     * @param integer $entityTypeId The ID of the entity type to return
+     *
+     * @return array|null The entity type
+     */
+    public function getEntityTypeByEntityTypeId($entityTypeId)
+    {
+
+        // try to find the entity type with the passed ID and return it, if available
+        foreach ($this->entityTypes as $entityType) {
+            if ($entityType[MemberNames::ENTITY_TYPE_ID] === $entityTypeId) {
+                return $entityType;
+            }
+        }
+    }
+
+    /**
+     * Return's the entity type code to be used.
+     *
+     * @return string The entity type code to be used
+     */
+    public function getEntityTypeCode()
+    {
+
+        // initialize the entity type
+        $entityType = null;
+
+        // query wether or not we already have an attribute set
+        if ($this->lastAttributeSet) {
+            $entityType = $this->getEntityTypeByEntityTypeId($this->lastAttributeSet[MemberNames::ENTITY_TYPE_ID]);
+        }
+
+        // load the entity type code from the configuration
+        $entityTypeCode =  $entityType ? $entityType[MemberNames::ENTITY_TYPE_CODE] : $this->getConfiguration()->getConfiguration()->getEntityTypeCode();
+
+        // try to map the entity type code
+        if (isset($this->entityTypeCodeToAttributeSetMappings[$entityTypeCode])) {
+            $entityTypeCode = $this->entityTypeCodeToAttributeSetMappings[$entityTypeCode];
+        }
+
+        // return the (mapped) entity type code
+        return $entityTypeCode;
     }
 
     /**
@@ -160,23 +222,11 @@ class BunchSubject extends AbstractEavSubject implements BunchSubjectInterface
      * Return's the ID of the attribute set that has been created recently.
      *
      * @return integer The attribute set ID
-     * @see \TechDivision\Import\Attribute\Set\Subjects\BunchSubject::getLastAttributeId()
+     * @see \TechDivision\Import\Attribute\Set\Subjects\BunchSubject::getLastAttributeSetId()
      */
     public function getLastEntityId()
     {
         return $this->getLastAttributeSetId();
-    }
-
-    /**
-     * Set's the ID of the attribute set that has been created recently.
-     *
-     * @param integer $lastAttributeSetId The attribute set ID
-     *
-     * @return void
-     */
-    public function setLastAttributeSetId($lastAttributeSetId)
-    {
-        $this->lastAttributeSetId = $lastAttributeSetId;
     }
 
     /**
@@ -186,6 +236,28 @@ class BunchSubject extends AbstractEavSubject implements BunchSubjectInterface
      */
     public function getLastAttributeSetId()
     {
-        return $this->lastAttributeSetId;
+        return $this->lastAttributeSet[MemberNames::ATTRIBUTE_SET_ID];
+    }
+
+    /**
+     * Set's the attribute set that has been created recently.
+     *
+     * @param array $lastAttributeSet The attribute set
+     *
+     * @return void
+     */
+    public function setLastAttributeSet(array $lastAttributeSet)
+    {
+        $this->lastAttributeSet = $lastAttributeSet;
+    }
+
+    /**
+     * Return's the attribute set that has been created recently.
+     *
+     * @return array The attribute set
+     */
+    public function getLastAttributeSet()
+    {
+        return $this->lastAttributeSet;
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * TechDivision\Import\Attribute\Set\Actions\Processors\AttributeSetUpdateProcessor
+ * TechDivision\Import\Attribute\Set\Actions\Processors\EavAttributeGroupCreateProcessor
  *
  * NOTICE OF LICENSE
  *
@@ -20,12 +20,11 @@
 
 namespace TechDivision\Import\Attribute\Set\Actions\Processors;
 
-use TechDivision\Import\Attribute\Utils\MemberNames;
 use TechDivision\Import\Attribute\Set\Utils\SqlStatementKeys;
-use TechDivision\Import\Actions\Processors\AbstractUpdateProcessor;
+use TechDivision\Import\Actions\Processors\AbstractCreateProcessor;
 
 /**
- * The EAV attribute set update processor implementation.
+ * The EAV attribute group create processor implementation.
  *
  * @author    Tim Wagner <t.wagner@techdivision.com>
  * @copyright 2019 TechDivision GmbH <info@techdivision.com>
@@ -33,7 +32,7 @@ use TechDivision\Import\Actions\Processors\AbstractUpdateProcessor;
  * @link      https://github.com/techdivision/import-attribute-set
  * @link      http://www.techdivision.com
  */
-class AttributeSetUpdateProcessor extends AbstractUpdateProcessor
+class EavAttributeGroupCreateProcessor extends AbstractCreateProcessor
 {
 
     /**
@@ -47,21 +46,7 @@ class AttributeSetUpdateProcessor extends AbstractUpdateProcessor
 
         // return the array with the SQL statements that has to be prepared
         return array(
-            SqlStatementKeys::UPDATE_ATTRIBUTE_SET => $this->loadStatement(SqlStatementKeys::UPDATE_ATTRIBUTE_SET)
+            SqlStatementKeys::CREATE_ATTRIBUTE_GROUP => $this->loadStatement(SqlStatementKeys::CREATE_ATTRIBUTE_GROUP)
         );
-    }
-
-    /**
-     * Update's the passed row.
-     *
-     * @param array       $row  The row to update
-     * @param string|null $name The name of the prepared statement that has to be executed
-     *
-     * @return string The ID of the updated attribute
-     */
-    public function execute($row, $name = null)
-    {
-        parent::execute($row, $name);
-        return $row[MemberNames::ATTRIBUTE_SET_ID];
     }
 }

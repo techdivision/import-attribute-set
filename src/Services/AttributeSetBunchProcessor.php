@@ -76,11 +76,11 @@ class AttributeSetBunchProcessor implements AttributeSetBunchProcessorInterface
     /**
      * Initialize the processor with the necessary repository and action instances.
      *
-     * @param \TechDivision\Import\Connection\ConnectionInterface                                  $connection                  The connection to use
-     * @param \TechDivision\Import\Repositories\EavAttributeSetRepositoryInterface                 $eavAttributeSetRepository   The EAV attribute set repository instance
-     * @param \TechDivision\Import\Repositories\EavAttributeGroupRepositoryInterface               $eavAttributeGroupRepository The EAV attribute group repository instance
-     * @param \TechDivision\Import\Attribute\Set\Actions\EavAttributeSetActionInterface            $eavAttributeSetAction       The EAV attribute set action instance
-     * @param \TechDivision\Import\Attribute\Set\Actions\EavAttributeGroupActionInterface          $eavAttributeGroupAction     The EAV attribute gropu action instance
+     * @param \TechDivision\Import\Connection\ConnectionInterface                         $connection                  The connection to use
+     * @param \TechDivision\Import\Repositories\EavAttributeSetRepositoryInterface        $eavAttributeSetRepository   The EAV attribute set repository instance
+     * @param \TechDivision\Import\Repositories\EavAttributeGroupRepositoryInterface      $eavAttributeGroupRepository The EAV attribute group repository instance
+     * @param \TechDivision\Import\Attribute\Set\Actions\EavAttributeSetActionInterface   $eavAttributeSetAction       The EAV attribute set action instance
+     * @param \TechDivision\Import\Attribute\Set\Actions\EavAttributeGroupActionInterface $eavAttributeGroupAction     The EAV attribute gropu action instance
      */
     public function __construct(
         ConnectionInterface $connection,
@@ -165,7 +165,7 @@ class AttributeSetBunchProcessor implements AttributeSetBunchProcessorInterface
     /**
      * Set's the attribute set repository instance.
      *
-     * @param \TechDivision\Import\Repositories\EavAttributeSetRepositoryInterface The attribute set repository instance
+     * @param \TechDivision\Import\Repositories\EavAttributeSetRepositoryInterface $eavAttributeSetRepository The attribute set repository instance
      *
      * @return void
      */
@@ -260,7 +260,20 @@ class AttributeSetBunchProcessor implements AttributeSetBunchProcessorInterface
      */
     public function loadAttributeSetByEntityTypeCodeAndAttributeSetName($entityTypeCode, $attributeSetName)
     {
-        return $this->getEavAttributeSetRepository()->findOneByEntityTypeNameAndAttributeSetName($entityTypeCode, $attributeSetName);
+        return $this->getEavAttributeSetRepository()->findOneByEntityTypeCodeAndAttributeSetName($entityTypeCode, $attributeSetName);
+    }
+
+    /**
+     * Load's and return's the EAV attribute set with the passed entity type ID and attribute set name.
+     *
+     * @param string $entityTypeId     The entity type ID of the EAV attribute set to load
+     * @param string $attributeSetName The attribute set name of the EAV attribute set to return
+     *
+     * @return array The EAV attribute set
+     */
+    public function loadAttributeSetByEntityTypeIdAndAttributeSetName($entityTypeId, $attributeSetName)
+    {
+        return $this->getEavAttributeSetRepository()->findOneByEntityTypeIdAndAttributeSetName($entityTypeId, $attributeSetName);
     }
 
     /**
@@ -272,7 +285,7 @@ class AttributeSetBunchProcessor implements AttributeSetBunchProcessorInterface
      *
      * @return array The EAV attribute group
      */
-    public function loadAttributeGroupByAttributeSetNameAndAttributeGroupName($entityTypeCode, $attributeSetName, $attributeGroupName)
+    public function loadAttributeGroupByEntityTypeCodeAndAttributeSetNameAndAttributeGroupName($entityTypeCode, $attributeSetName, $attributeGroupName)
     {
         return $this->getEavAttributeGroupRepository()->findOneByEntityTypeCodeAndAttributeSetNameAndAttributeGroupName($entityTypeCode, $attributeSetName, $attributeGroupName);
     }
@@ -283,7 +296,7 @@ class AttributeSetBunchProcessor implements AttributeSetBunchProcessorInterface
      * @param array       $attributeSet The attribute set data to persist
      * @param string|null $name         The name of the prepared statement that has to be executed
      *
-     * @return string The ID of the persisted attribute
+     * @return string The ID of the persisted attribute set
      */
     public function persistAttributeSet(array $attributeSet, $name = null)
     {

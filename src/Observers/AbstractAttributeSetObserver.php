@@ -100,15 +100,25 @@ abstract class AbstractAttributeSetObserver extends AbstractObserver
     }
 
     /**
-     * Set's the ID of the attribute set that has been created recently.
+     * Set's the attribute set that has been created recently.
      *
-     * @param integer $lastAttributeSetId The attribute set ID
+     * @param array $lastAttributeSet The attribute set
      *
      * @return void
      */
-    protected function setLastAttributeSetId($lastAttributeSetId)
+    protected function setLastAttributeSet(array $lastAttributeSet)
     {
-        $this->getSubject()->setLastAttributeSetId($lastAttributeSetId);
+        $this->getSubject()->setLastAttributeSet($lastAttributeSet);
+    }
+
+    /**
+     * Return's the attribute set that has been created recently.
+     *
+     * @return array The attribute set
+     */
+    protected function getLastAttributeSet()
+    {
+        return $this->getSubject()->getLastAttributeSet();
     }
 
     /**

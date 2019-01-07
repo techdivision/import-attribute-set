@@ -61,10 +61,7 @@ class ClearAttributeSetObserver extends AbstractAttributeSetObserver
         $attributeSet = $this->loadAttributeSetByEntityTypeCodeAndAttributeSetName($entityTypeCode, $attributeSetName);
 
         // delete the EAV attribute set
-        $this->deleteAttributeSet(array(MemberNames::ATTRIBUTE_SET_ID_ID => $attributeSet[MemberNames::ATTRIBUTE_SET_ID]));
-
-        // temporary persist the ID of the deleted attribute set
-        $this->setLastAttributeId($attributeSet[MemberNames::ATTRIBUTE_SET_ID]);
+        $this->deleteAttributeSet(array(MemberNames::ATTRIBUTE_SET_ID => $attributeSet[MemberNames::ATTRIBUTE_SET_ID]));
     }
 
     /**

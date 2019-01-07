@@ -1,7 +1,7 @@
 <?php
 
 /**
- * TechDivision\Import\Attribute\Set\Actions\Processors\AttributeGroupCreateProcessor
+ * TechDivision\Import\Attribute\Set\Actions\Processors\EavAttributeSetUpdateProcessor
  *
  * NOTICE OF LICENSE
  *
@@ -20,11 +20,12 @@
 
 namespace TechDivision\Import\Attribute\Set\Actions\Processors;
 
+use TechDivision\Import\Attribute\Utils\MemberNames;
 use TechDivision\Import\Attribute\Set\Utils\SqlStatementKeys;
-use TechDivision\Import\Actions\Processors\AbstractCreateProcessor;
+use TechDivision\Import\Actions\Processors\AbstractUpdateProcessor;
 
 /**
- * The EAV attribute group create processor implementation.
+ * The EAV attribute set update processor implementation.
  *
  * @author    Tim Wagner <t.wagner@techdivision.com>
  * @copyright 2019 TechDivision GmbH <info@techdivision.com>
@@ -32,7 +33,7 @@ use TechDivision\Import\Actions\Processors\AbstractCreateProcessor;
  * @link      https://github.com/techdivision/import-attribute-set
  * @link      http://www.techdivision.com
  */
-class AttributeGroupCreateProcessor extends AbstractCreateProcessor
+class EavAttributeSetUpdateProcessor extends AbstractUpdateProcessor
 {
 
     /**
@@ -46,7 +47,21 @@ class AttributeGroupCreateProcessor extends AbstractCreateProcessor
 
         // return the array with the SQL statements that has to be prepared
         return array(
-            SqlStatementKeys::CREATE_ATTRIBUTE_GROUP => $this->loadStatement(SqlStatementKeys::CREATE_ATTRIBUTE_GROUP)
+            SqlStatementKeys::UPDATE_ATTRIBUTE_SET => $this->loadStatement(SqlStatementKeys::UPDATE_ATTRIBUTE_SET)
         );
+    }
+
+    /**
+     * Update's the passed row.
+     *
+     * @param array       $row  The row to update
+     * @param string|null $name The name of the prepared statement that has to be executed
+     *
+     * @return string The ID of the updated attribute
+     */
+    public function execute($row, $name = null)
+    {
+        parent::execute($row, $name);
+        return $row[MemberNames::ATTRIBUTE_SET_ID];
     }
 }

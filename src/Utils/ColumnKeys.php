@@ -33,6 +33,13 @@ class ColumnKeys extends \TechDivision\Import\Attribute\Utils\ColumnKeys
 {
 
     /**
+     * Name for the column 'default_id'.
+     *
+     * @var string
+     */
+    const DEFAULT_ID = 'default_id';
+
+    /**
      * Name for the column 'attribute_group_code'.
      *
      * @var string

@@ -33,14 +33,14 @@
         </service>
 
         <service id="import_attribute_set.action.eav.attribute.set" class="TechDivision\Import\Attribute\Set\Actions\EavAttributeSetAction">
-            <argument type="service" id="import_attribute_set.action.processor.attribute.set.create"/>
-            <argument type="service" id="import_attribute_set.action.processor.attribute.set.update"/>
-            <argument type="service" id="import_attribute_set.action.processor.attribute.set.delete"/>
+            <argument type="service" id="import_attribute_set.action.processor.eav.attribute.set.create"/>
+            <argument type="service" id="import_attribute_set.action.processor.eav.attribute.set.update"/>
+            <argument type="service" id="import_attribute_set.action.processor.eav.attribute.set.delete"/>
         </service>
         <service id="import_attribute_set.action.eav.attribute.group" class="TechDivision\Import\Attribute\Set\Actions\EavAttributeGroupAction">
-            <argument type="service" id="import_attribute_set.action.processor.attribute.group.create"/>
-            <argument type="service" id="import_attribute_set.action.processor.attribute.group.update"/>
-            <argument type="service" id="import_attribute_set.action.processor.attribute.group.delete"/>
+            <argument type="service" id="import_attribute_set.action.processor.eav.attribute.group.create"/>
+            <argument type="service" id="import_attribute_set.action.processor.eav.attribute.group.update"/>
+            <argument type="service" id="import_attribute_set.action.processor.eav.attribute.group.delete"/>
         </service>
 
         <service id="import_attribute_set.observer.clear.attribute.set" class="TechDivision\Import\Attribute\Set\Observers\ClearAttributeSetObserver">
