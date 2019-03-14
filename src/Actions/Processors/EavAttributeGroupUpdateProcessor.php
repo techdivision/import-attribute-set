@@ -20,6 +20,7 @@
 
 namespace TechDivision\Import\Attribute\Set\Actions\Processors;
 
+use TechDivision\Import\Attribute\Set\Utils\MemberNames;
 use TechDivision\Import\Attribute\Set\Utils\SqlStatementKeys;
 use TechDivision\Import\Actions\Processors\AbstractUpdateProcessor;
 
@@ -48,5 +49,19 @@ class EavAttributeGroupUpdateProcessor extends AbstractUpdateProcessor
         return array(
             SqlStatementKeys::UPDATE_ATTRIBUTE_GROUP => $this->loadStatement(SqlStatementKeys::UPDATE_ATTRIBUTE_GROUP)
         );
+    }
+
+    /**
+     * Update's the passed row.
+     *
+     * @param array       $row  The row to update
+     * @param string|null $name The name of the prepared statement that has to be executed
+     *
+     * @return string The ID of the updated attribute
+     */
+    public function execute($row, $name = null)
+    {
+        parent::execute($row, $name);
+        return $row[MemberNames::ATTRIBUTE_GROUP_ID];
     }
 }

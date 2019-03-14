@@ -7,6 +7,15 @@
 
         <service id="import_attribute_set.repository.sql.statement" class="TechDivision\Import\Attribute\Set\Repositories\SqlStatementRepository"/>
 
+        <service id="import_attribute_set.repository.entity.attribute" class="TechDivision\Import\Attribute\Set\Repositories\EntityAttributeRepository">
+            <argument type="service" id="connection"/>
+            <argument type="service" id="import_attribute_set.repository.sql.statement"/>
+        </service>
+        <service id="import_attribute_set.repository.eav.attribute.group" class="TechDivision\Import\Attribute\Set\Repositories\EavAttributeGroupRepository">
+            <argument type="service" id="connection"/>
+            <argument type="service" id="import_attribute_set.repository.sql.statement"/>
+        </service>
+
         <service id="import_attribute_set.action.processor.eav.attribute.set.create" class="TechDivision\Import\Attribute\Set\Actions\Processors\EavAttributeSetCreateProcessor">
             <argument type="service" id="connection"/>
             <argument type="service" id="import_attribute_set.repository.sql.statement"/>
@@ -55,19 +64,27 @@
         <service id="import_attribute_set.observer.attribute.set.update" class="TechDivision\Import\Attribute\Set\Observers\AttributeSetUpdateObserver">
             <argument type="service" id="import_attribute_set.processor.attribute.set.bunch"/>
         </service>
-        <service id="import_attribute_set.observer.attribute.group" class="TechDivision\Import\Attribute\SetObservers\AttributeGroupObserver">
+        <service id="import_attribute_set.observer.attribute.group" class="TechDivision\Import\Attribute\Set\Observers\AttributeGroupObserver">
             <argument type="service" id="import_attribute_set.processor.attribute.set.bunch"/>
         </service>
         <service id="import_attribute_set.observer.attribute.group.update" class="TechDivision\Import\Attribute\Set\Observers\AttributeGroupUpdateObserver">
+            <argument type="service" id="import_attribute_set.processor.attribute.set.bunch"/>
+        </service>
+        <service id="import_attribute_set.observer.copy.parent.attribute.set" class="TechDivision\Import\Attribute\Set\Observers\CopyParentAttributeSetObserver">
+            <argument type="service" id="import_attribute_set.processor.attribute.set.bunch"/>
+        </service>
+        <service id="import_attribute_set.observer.copy.parent.attribute.set.update" class="TechDivision\Import\Attribute\Set\Observers\CopyParentAttributeSetUpdateObserver">
             <argument type="service" id="import_attribute_set.processor.attribute.set.bunch"/>
         </service>
 
         <service id="import_attribute_set.processor.attribute.set.bunch" class="TechDivision\Import\Attribute\Set\Services\AttributeSetBunchProcessor">
             <argument type="service" id="connection"/>
             <argument type="service" id="import.repository.eav.attribute.set"/>
-            <argument type="service" id="import.repository.eav.attribute.group"/>
+            <argument type="service" id="import_attribute_set.repository.eav.attribute.group"/>
+            <argument type="service" id="import_attribute_set.repository.entity.attribute"/>
             <argument type="service" id="import_attribute_set.action.eav.attribute.set"/>
             <argument type="service" id="import_attribute_set.action.eav.attribute.group"/>
+            <argument type="service" id="import_attribute.action.entity.attribute"/>
         </service>
 
         <service id="import_attribute_set.subject.bunch" class="TechDivision\Import\Attribute\Set\Subjects\BunchSubject" shared="false">

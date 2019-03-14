@@ -49,4 +49,18 @@ class EavAttributeGroupCreateProcessor extends AbstractCreateProcessor
             SqlStatementKeys::CREATE_ATTRIBUTE_GROUP => $this->loadStatement(SqlStatementKeys::CREATE_ATTRIBUTE_GROUP)
         );
     }
+
+    /**
+     * Persist's the passed row.
+     *
+     * @param array       $row  The row to persist
+     * @param string|null $name The name of the prepared statement that has to be executed
+     *
+     * @return string The last inserted ID
+     */
+    public function execute($row, $name = null)
+    {
+        parent::execute($row, $name);
+        return $this->getConnection()->lastInsertId();
+    }
 }

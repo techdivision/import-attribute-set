@@ -42,9 +42,16 @@ interface AttributeSetBunchProcessorInterface extends AttributeSetProcessorInter
     /**
      * Return's the attribute group repository instance.
      *
-     * @return \TechDivision\Import\Repositories\EavAttributeGroupRepositoryInterface The attribute group repository instance
+     * @return \TechDivision\Import\Attribute\Set\Repositories\EavAttributeGroupRepositoryInterface The attribute group repository instance
      */
     public function getEavAttributeGroupRepository();
+
+    /**
+     * Return's the entity attribute repository instance.
+     *
+     * @return \TechDivision\Import\Attribute\Set\Repositories\EntityAttributeRepositoryInterface The entity attribute repository instance
+     */
+    public function getEntityAttributeRepository();
 
     /**
      * Return's the attribute set action instance.
@@ -92,6 +99,55 @@ interface AttributeSetBunchProcessorInterface extends AttributeSetProcessorInter
     public function loadAttributeGroupByEntityTypeCodeAndAttributeSetNameAndAttributeGroupName($entityTypeCode, $attributeSetName, $attributeGroupName);
 
     /**
+     * Returns the EAV entity attributes for the attribute group with the passed ID.
+     *
+     * @param integer $attributeGroupId The attribute group ID to load the EAV entity attributes for
+     *
+     * @return array|null The EAV attributes with for the passed attribute group ID
+     */
+    public function loadEntityAttributesByAttributeGroupId($attributeGroupId);
+
+    /**
+     * Returns the EAV entity attributes for the entity type ID and attribute set with the passed name.
+     *
+     * @param integer $entityTypeId     The entity type ID to load the EAV entity attributes for
+     * @param string  $attributeSetName The attribute set name to return the EAV entity attributes for
+     *
+     * @return array|null The EAV entity attributes with for the passed entity type ID and attribute set name
+     */
+    public function loadEntityAttributesByEntityTypeIdAndAttributeSetName($entityTypeId, $attributeSetName);
+
+    /**
+     * Return's the EAV entity attribute with the passed attribute and attribute set ID.
+     *
+     * @param integer $attributeId    The ID of the EAV entity attribute's attribute to return
+     * @param integer $attributeSetId The ID of the EAV entity attribute's attribute set to return
+     *
+     * @return array The EAV entity attribute
+     */
+    public function loadEntityAttributeByAttributeIdAndAttributeSetId($attributeId, $attributeSetId);
+
+    /**
+     * Return's the attribute groups for the passed attribute set ID, whereas the array
+     * is prepared with the attribute group names as keys.
+     *
+     * @param mixed $attributeSetId The EAV attribute set ID to return the attribute groups for
+     *
+     * @return array|boolean The EAV attribute groups for the passed attribute ID
+     */
+    public function loadAttributeGroupsByAttributeSetId($attributeSetId);
+
+    /**
+     * Return's the attribute group for the passed attribute set ID and attribute group code.
+     *
+     * @param integer $attributeSetId     The EAV attribute set ID to return the attribute group for
+     * @param string  $attributeGroupCode The EAV attribute group code to load the attribute group for
+     *
+     * @return array|boolean The EAV attribute group for the passed attribute set ID and attribute group code
+     */
+    public function loadAttributeGroupByAttributeSetIdAndAttributeGroupCode($attributeSetId, $attributeGroupCode);
+
+    /**
      * Persist's the passed EAV attribute set data and return's the ID.
      *
      * @param array       $attributeSet The attribute set data to persist
@@ -107,9 +163,19 @@ interface AttributeSetBunchProcessorInterface extends AttributeSetProcessorInter
      * @param array       $attributeGroup The attribute group to persist
      * @param string|null $name           The name of the prepared statement that has to be executed
      *
-     * @return void
+     * @return string The ID of the persisted attribute group
      */
     public function persistAttributeGroup(array $attributeGroup, $name = null);
+
+    /**
+     * Persist's the passed EAV entity attribute data and return's the ID.
+     *
+     * @param array       $entityAttribute The entity attribute data to persist
+     * @param string|null $name            The name of the prepared statement that has to be executed
+     *
+     * @return void
+     */
+    public function persistEntityAttribute(array $entityAttribute, $name = null);
 
     /**
      * Delete's the EAV attribute set with the passed attributes.

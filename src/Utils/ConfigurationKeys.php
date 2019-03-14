@@ -1,7 +1,7 @@
 <?php
 
 /**
- * TechDivision\Import\Attribute\Set\Utils\ColumnKeys
+ * TechDivision\Import\Attribute\Set\Utils\ConfigurationKeys
  *
  * NOTICE OF LICENSE
  *
@@ -21,7 +21,7 @@
 namespace TechDivision\Import\Attribute\Set\Utils;
 
 /**
- * Utility class containing the CSV column names.
+ * Utility class containing the configuration keys.
  *
  * @author    Tim Wagner <t.wagner@techdivision.com>
  * @copyright 2019 TechDivision GmbH <info@techdivision.com>
@@ -29,41 +29,13 @@ namespace TechDivision\Import\Attribute\Set\Utils;
  * @link      https://github.com/techdivision/import-attribute-set
  * @link      http://www.techdivision.com
  */
-class ColumnKeys extends \TechDivision\Import\Attribute\Utils\ColumnKeys
+class ConfigurationKeys extends \TechDivision\Import\Utils\ConfigurationKeys
 {
 
     /**
-     * Name for the column 'based_on'.
+     * Name for the configuration key 'copy-parent-on-update'.
      *
      * @var string
      */
-    const BASED_ON = 'based_on';
-
-    /**
-     * Name for the column 'default_id'.
-     *
-     * @var string
-     */
-    const DEFAULT_ID = 'default_id';
-
-    /**
-     * Name for the column 'attribute_group_code'.
-     *
-     * @var string
-     */
-    const ATTRIBUTE_GROUP_CODE = 'attribute_group_code';
-
-    /**
-     * Name for the column 'attribute_group_tab_group_code'.
-     *
-     * @var string
-     */
-    const ATTRIBUTE_GROUP_TAB_GROUP_CODE = 'attribute_group_tab_group_code';
-
-    /**
-     * Name for the column 'attribute_group_sort_order'.
-     *
-     * @var string
-     */
-    const ATTRIBUTE_GROUP_SORT_ORDER = 'attribute_group_sort_order';
+    const COPY_PARENT_ON_UPDATE = 'copy-parent-on-update';
 }

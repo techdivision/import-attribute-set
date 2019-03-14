@@ -22,9 +22,11 @@ namespace TechDivision\Import\Attribute\Set\Services;
 
 use TechDivision\Import\Connection\ConnectionInterface;
 use TechDivision\Import\Repositories\EavAttributeSetRepositoryInterface;
-use TechDivision\Import\Repositories\EavAttributeGroupRepositoryInterface;
 use TechDivision\Import\Attribute\Set\Actions\EavAttributeSetActionInterface;
 use TechDivision\Import\Attribute\Set\Actions\EavAttributeGroupActionInterface;
+use TechDivision\Import\Attribute\Set\Repositories\EntityAttributeRepositoryInterface;
+use TechDivision\Import\Attribute\Set\Repositories\EavAttributeGroupRepositoryInterface;
+use TechDivision\Import\Attribute\Actions\EntityAttributeActionInterface;
 
 /**
  * The attribute set bunch processor implementation.
@@ -55,9 +57,16 @@ class AttributeSetBunchProcessor implements AttributeSetBunchProcessorInterface
     /**
      * The EAV attribute set repository instance.
      *
-     * @var \TechDivision\Import\Repositories\EavAttributeGroupRepositoryInterface
+     * @var \TechDivision\Import\Attribute\Set\Repositories\EavAttributeGroupRepositoryInterface
      */
     protected $eavAttributeGroupRepository;
+
+    /**
+     * The EAV entity attribute repository instance.
+     *
+     * @var \TechDivision\Import\Attribute\Set\Repositories\EntityAttributeRepositoryInterface
+     */
+    protected $attributeOptionRepository;
 
     /**
      * The attribute set action instance.
@@ -74,26 +83,39 @@ class AttributeSetBunchProcessor implements AttributeSetBunchProcessorInterface
     protected $eavAttributeGroupAction;
 
     /**
+     * The entity attribute action instance.
+     *
+     * @var \TechDivision\Import\Attribute\Actions\EntityAttributeActionInterface
+     */
+    protected $entityAttributeAction;
+
+    /**
      * Initialize the processor with the necessary repository and action instances.
      *
-     * @param \TechDivision\Import\Connection\ConnectionInterface                         $connection                  The connection to use
-     * @param \TechDivision\Import\Repositories\EavAttributeSetRepositoryInterface        $eavAttributeSetRepository   The EAV attribute set repository instance
-     * @param \TechDivision\Import\Repositories\EavAttributeGroupRepositoryInterface      $eavAttributeGroupRepository The EAV attribute group repository instance
-     * @param \TechDivision\Import\Attribute\Set\Actions\EavAttributeSetActionInterface   $eavAttributeSetAction       The EAV attribute set action instance
-     * @param \TechDivision\Import\Attribute\Set\Actions\EavAttributeGroupActionInterface $eavAttributeGroupAction     The EAV attribute gropu action instance
+     * @param \TechDivision\Import\Connection\ConnectionInterface                                  $connection                  The connection to use
+     * @param \TechDivision\Import\Repositories\EavAttributeSetRepositoryInterface                 $eavAttributeSetRepository   The EAV attribute set repository instance
+     * @param \TechDivision\Import\Attribute\Set\Repositories\EavAttributeGroupRepositoryInterface $eavAttributeGroupRepository The EAV attribute group repository instance
+     * @param \TechDivision\Import\Attribute\Set\Repositories\EntityAttributeRepositoryInterface   $entityAttributeRepository   The EAV attribute option repository instance
+     * @param \TechDivision\Import\Attribute\Set\Actions\EavAttributeSetActionInterface            $eavAttributeSetAction       The EAV attribute set action instance
+     * @param \TechDivision\Import\Attribute\Set\Actions\EavAttributeGroupActionInterface          $eavAttributeGroupAction     The EAV attribute gropu action instance
+     * @param \TechDivision\Import\Attribute\Actions\EntityAttributeActionInterface                $entityAttributeAction       The entity attribute action instance
      */
     public function __construct(
         ConnectionInterface $connection,
         EavAttributeSetRepositoryInterface $eavAttributeSetRepository,
         EavAttributeGroupRepositoryInterface $eavAttributeGroupRepository,
+        EntityAttributeRepositoryInterface $entityAttributeRepository,
         EavAttributeSetActionInterface $eavAttributeSetAction,
-        EavAttributeGroupActionInterface $eavAttributeGroupAction
+        EavAttributeGroupActionInterface $eavAttributeGroupAction,
+        EntityAttributeActionInterface $entityAttributeAction
     ) {
         $this->setConnection($connection);
         $this->setEavAttributeSetRepository($eavAttributeSetRepository);
         $this->setEavAttributeGroupRepository($eavAttributeGroupRepository);
+        $this->setEntityAttributeRepository($entityAttributeRepository);
         $this->setEavAttributeSetAction($eavAttributeSetAction);
         $this->setEavAttributeGroupAction($eavAttributeGroupAction);
+        $this->setEntityAttributeAction($entityAttributeAction);
     }
 
     /**
@@ -187,7 +209,7 @@ class AttributeSetBunchProcessor implements AttributeSetBunchProcessorInterface
     /**
      * Set's the attribute group repository instance.
      *
-     * @param \TechDivision\Import\Repositories\EavAttributeGroupRepositoryInterface $eavAttributeGroupRepository The attribute group repository instance
+     * @param \TechDivision\Import\Attribute\Set\Repositories\EavAttributeGroupRepositoryInterface $eavAttributeGroupRepository The attribute group repository instance
      *
      * @return void
      */
@@ -199,11 +221,33 @@ class AttributeSetBunchProcessor implements AttributeSetBunchProcessorInterface
     /**
      * Return's the attribute group repository instance.
      *
-     * @return \TechDivision\Import\Repositories\EavAttributeGroupRepositoryInterface The attribute group repository instance
+     * @return \TechDivision\Import\Attribute\Set\Repositories\EavAttributeGroupRepositoryInterface The attribute group repository instance
      */
     public function getEavAttributeGroupRepository()
     {
         return $this->eavAttributeGroupRepository;
+    }
+
+    /**
+     * Set's the entity attribute repository instance.
+     *
+     * @param \TechDivision\Import\Attribute\Set\Repositories\EntityAttributeRepositoryInterface $entityAttributeRepository The entity attribute repository instance
+     *
+     * @return void
+     */
+    public function setEntityAttributeRepository(EntityAttributeRepositoryInterface $entityAttributeRepository)
+    {
+        $this->entityAttributeRepository = $entityAttributeRepository;
+    }
+
+    /**
+     * Return's the entity attribute repository instance.
+     *
+     * @return \TechDivision\Import\Attribute\Set\Repositories\EntityAttributeRepositoryInterface The entity attribute repository instance
+     */
+    public function getEntityAttributeRepository()
+    {
+        return $this->entityAttributeRepository;
     }
 
     /**
@@ -251,6 +295,28 @@ class AttributeSetBunchProcessor implements AttributeSetBunchProcessorInterface
     }
 
     /**
+     * Set's the entity attribute action instance.
+     *
+     * @param \TechDivision\Import\Attribute\Actions\EntityAttributeActionInterface $entityAttributeAction The entity attribute action instance
+     *
+     * @return void
+     */
+    public function setEntityAttributeAction(EntityAttributeActionInterface $entityAttributeAction)
+    {
+        $this->entityAttributeAction = $entityAttributeAction;
+    }
+
+    /**
+     * Return's the entity attribute action instance.
+     *
+     * @return \TechDivision\Import\Attribute\Actions\EntityAttributeActionInterface The entity attribute action instance
+     */
+    public function getEntityAttributeAction()
+    {
+        return $this->entityAttributeAction;
+    }
+
+    /**
      * Load's and return's the EAV attribute set with the passed entity type code and attribute set name.
      *
      * @param string $entityTypeCode   The entity type code of the EAV attribute set to load
@@ -291,6 +357,70 @@ class AttributeSetBunchProcessor implements AttributeSetBunchProcessorInterface
     }
 
     /**
+     * Returns the EAV entity attributes for the attribute group with the passed ID.
+     *
+     * @param integer $attributeGroupId The attribute group ID to load the EAV entity attributes for
+     *
+     * @return array|null The EAV attributes with for the passed attribute group ID
+     */
+    public function loadEntityAttributesByAttributeGroupId($attributeGroupId)
+    {
+        return $this->getEntityAttributeRepository()->findAllByAttributeGroupId($attributeGroupId);
+    }
+
+    /**
+     * Returns the EAV entity attributes for the entity type ID and attribute set with the passed name.
+     *
+     * @param integer $entityTypeId     The entity type ID to load the EAV entity attributes for
+     * @param string  $attributeSetName The attribute set name to return the EAV entity attributes for
+     *
+     * @return array|null The EAV entity attributes with for the passed entity type ID and attribute set name
+     */
+    public function loadEntityAttributesByEntityTypeIdAndAttributeSetName($entityTypeId, $attributeSetName)
+    {
+        return $this->getEntityAttributeRepository()->findAllByEntityTypeIdAndAttributeSetName($entityTypeId, $attributeSetName);
+    }
+
+    /**
+     * Return's the EAV entity attribute with the passed attribute and attribute set ID.
+     *
+     * @param integer $attributeId    The ID of the EAV entity attribute's attribute to return
+     * @param integer $attributeSetId The ID of the EAV entity attribute's attribute set to return
+     *
+     * @return array The EAV entity attribute
+     */
+    public function loadEntityAttributeByAttributeIdAndAttributeSetId($attributeId, $attributeSetId)
+    {
+        return $this->getEntityAttributeRepository()->findOneByAttributeIdAndAttributeSetId($attributeId, $attributeSetId);
+    }
+
+    /**
+     * Return's the attribute groups for the passed attribute set ID, whereas the array
+     * is prepared with the attribute group names as keys.
+     *
+     * @param mixed $attributeSetId The EAV attribute set ID to return the attribute groups for
+     *
+     * @return array|boolean The EAV attribute groups for the passed attribute ID
+     */
+    public function loadAttributeGroupsByAttributeSetId($attributeSetId)
+    {
+        return $this->getEavAttributeGroupRepository()->findAllByAttributeSetId($attributeSetId);
+    }
+
+    /**
+     * Return's the attribute group for the passed attribute set ID and attribute group code.
+     *
+     * @param integer $attributeSetId     The EAV attribute set ID to return the attribute group for
+     * @param string  $attributeGroupCode The EAV attribute group code to load the attribute group for
+     *
+     * @return array|boolean The EAV attribute group for the passed attribute set ID and attribute group code
+     */
+    public function loadAttributeGroupByAttributeSetIdAndAttributeGroupCode($attributeSetId, $attributeGroupCode)
+    {
+        return $this->getEavAttributeGroupRepository()->findOneByAttributeSetIdAndAttributeGroupCode($attributeSetId, $attributeGroupCode);
+    }
+
+    /**
      * Persist's the passed EAV attribute set data and return's the ID.
      *
      * @param array       $attributeSet The attribute set data to persist
@@ -309,11 +439,24 @@ class AttributeSetBunchProcessor implements AttributeSetBunchProcessorInterface
      * @param array       $attributeGroup The attribute group to persist
      * @param string|null $name           The name of the prepared statement that has to be executed
      *
-     * @return void
+     * @return string The ID of the persisted attribute group
      */
     public function persistAttributeGroup(array $attributeGroup, $name = null)
     {
-        $this->getEavAttributeGroupAction()->persist($attributeGroup);
+        return $this->getEavAttributeGroupAction()->persist($attributeGroup);
+    }
+
+    /**
+     * Persist's the passed EAV entity attribute data and return's the ID.
+     *
+     * @param array       $entityAttribute The entity attribute data to persist
+     * @param string|null $name            The name of the prepared statement that has to be executed
+     *
+     * @return void
+     */
+    public function persistEntityAttribute(array $entityAttribute, $name = null)
+    {
+        $this->getEntityAttributeAction()->persist($entityAttribute, $name);
     }
 
     /**
