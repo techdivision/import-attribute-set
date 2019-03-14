@@ -31,7 +31,7 @@ use TechDivision\Import\Attribute\Set\Utils\SqlStatementKeys;
  * @link      https://github.com/techdivision/import-attribute-set
  * @link      http://www.techdivision.com
  */
-class SqlStatementRepository extends \TechDivision\Import\Repositories\SqlStatementRepository
+class SqlStatementRepository extends \TechDivision\Import\Attribute\Repositories\SqlStatementRepository
 {
 
     /**
@@ -82,7 +82,23 @@ class SqlStatementRepository extends \TechDivision\Import\Repositories\SqlStatem
         SqlStatementKeys::DELETE_ATTRIBUTE_SET =>
             'DELETE FROM eav_attribute_set WHERE attribute_set_id = :attribute_set_id',
         SqlStatementKeys::DELETE_ATTRIBUTE_GROUP =>
-            'DELETE FROM eav_attribute_group WHERE attribute_group_id = :attribute_group_id'
+            'DELETE FROM eav_attribute_group WHERE attribute_group_id = :attribute_group_id',
+        SqlStatementKeys::ENTITY_ATTRIBUTES_BY_ATTRIBUTE_GROUP_ID =>
+            'SELECT *
+               FROM eav_entity_attribute
+              WHERE attribute_group_id = :attribute_group_id',
+        SqlStatementKeys::ENTITY_ATTRIBUTES_BY_ENTITY_TYPE_ID_AND_ATTRIBUTE_SET_NAME =>
+            'SELECT t0.*
+               FROM eav_entity_attribute t0
+         INNER JOIN eav_attribute_set t1
+                 ON t1.attribute_set_name = :attribute_set_name
+	            AND t1.entity_type_id = :entity_type_id
+                AND t0.attribute_set_id = t1.attribute_set_id',
+        SqlStatementKeys::EAV_ATTRIBUTE_GROUP_BY_ATTRIBUTE_SET_ID_AND_ATTRIBUTE_GROUP_CODE =>
+            'SELECT *
+               FROM eav_attribute_group
+              WHERE attribute_set_id = :attribute_set_id
+                AND attribute_group_code = :attribute_group_code'
     );
 
     /**

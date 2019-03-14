@@ -43,11 +43,15 @@ class AttributeGroupObserver extends AbstractAttributeSetObserver
     protected function process()
     {
 
-        // prepare the attribue set values
-        $attributeSetGroup = $this->initializeAttribute($this->prepareAttributes());
-
-        // persist the entity
-        $this->persistAttributeGroup($attributeSetGroup);
+        // query whether or not at least attribute group name & code has been set
+        if ($this->hasValue(ColumnKeys::ATTRIBUTE_GROUP_NAME) &&
+            $this->hasValue(ColumnKeys::ATTRIBUTE_GROUP_CODE)
+        ) {
+            // prepare the attribue set values
+            $attributeSetGroup = $this->initializeAttribute($this->prepareAttributes());
+            // persist the entity
+            $this->persistAttributeGroup($attributeSetGroup);
+        }
     }
 
     /**
@@ -64,7 +68,7 @@ class AttributeGroupObserver extends AbstractAttributeSetObserver
         // load the attribute set values from the column
         $defaultId = $this->getValue(ColumnKeys::DEFAULT_ID, 0);
         $sortOrder = $this->getValue(ColumnKeys::ATTRIBUTE_GROUP_SORT_ORDER, 0);
-        $tabGroupCode = $this->getValue(ColumnKeys::ATTRIBUTE_GROUP_TAB_GROUP_CODE);
+        $tabGroupCode = $this->getValue(ColumnKeys::ATTRIBUTE_GROUP_TAB_GROUP_CODE, 'basic');
         $attributeGroupName = $this->getValue(ColumnKeys::ATTRIBUTE_GROUP_NAME);
         $attributeGroupCode = $this->getValue(ColumnKeys::ATTRIBUTE_GROUP_CODE);
 
