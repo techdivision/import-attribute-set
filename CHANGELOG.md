@@ -1,3 +1,15 @@
+# Version 4.0.0
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Switch to latest techdivision/import-attribute version 9.0.*
+* Add composite observers to minimize configuration complexity
+* Make Actions and ActionInterfaces deprecated, replace DI configuration with GenericAction + GenericIdentifierAction
+
 # Version 3.0.0
 
 ## Bugfixes

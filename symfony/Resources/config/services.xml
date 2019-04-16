@@ -41,12 +41,12 @@
             <argument type="service" id="import_attribute_set.repository.sql.statement"/>
         </service>
 
-        <service id="import_attribute_set.action.eav.attribute.set" class="TechDivision\Import\Attribute\Set\Actions\EavAttributeSetAction">
+        <service id="import_attribute_set.action.eav.attribute.set" class="TechDivision\Import\Actions\GenericIdentifierAction">
             <argument type="service" id="import_attribute_set.action.processor.eav.attribute.set.create"/>
             <argument type="service" id="import_attribute_set.action.processor.eav.attribute.set.update"/>
             <argument type="service" id="import_attribute_set.action.processor.eav.attribute.set.delete"/>
         </service>
-        <service id="import_attribute_set.action.eav.attribute.group" class="TechDivision\Import\Attribute\Set\Actions\EavAttributeGroupAction">
+        <service id="import_attribute_set.action.eav.attribute.group" class="TechDivision\Import\Actions\GenericIdentifierAction">
             <argument type="service" id="import_attribute_set.action.processor.eav.attribute.group.create"/>
             <argument type="service" id="import_attribute_set.action.processor.eav.attribute.group.update"/>
             <argument type="service" id="import_attribute_set.action.processor.eav.attribute.group.delete"/>
@@ -75,6 +75,45 @@
         </service>
         <service id="import_attribute_set.observer.copy.parent.attribute.set.update" class="TechDivision\Import\Attribute\Set\Observers\CopyParentAttributeSetUpdateObserver">
             <argument type="service" id="import_attribute_set.processor.attribute.set.bunch"/>
+        </service>
+
+        <!--
+         | The DI configuration for the composite observers of the attribute set replace operation.
+         |-->
+        <service id="import_attribute_set.observer.composite.replace" class="TechDivision\Import\Observers\GenericCompositeObserver">
+            <call method="addObserver">
+                <argument id="import_attribute_set.observer.clear.attribute.set" type="service"/>
+            </call>
+            <call method="addObserver">
+                <argument id="import_attribute_set.observer.attribute.set" type="service"/>
+            </call>
+            <call method="addObserver">
+                <argument id="import_attribute_set.observer.attribute.group" type="service"/>
+            </call>
+            <call method="addObserver">
+                <argument id="import_attribute_set.observer.copy.parent.attribute.set" type="service"/>
+            </call>
+            <call method="addObserver">
+                <argument id="import_attribute_set.observer.attribute.set.clean.up" type="service"/>
+            </call>
+        </service>
+
+        <!--
+         | The DI configuration for the composite observers of the attribute set add-update operation.
+         |-->
+        <service id="import_attribute_set.observer.composite.add_update" class="TechDivision\Import\Observers\GenericCompositeObserver">
+            <call method="addObserver">
+                <argument id="import_attribute_set.observer.attribute.set.update" type="service"/>
+            </call>
+            <call method="addObserver">
+                <argument id="import_attribute_set.observer.attribute.group.update" type="service"/>
+            </call>
+            <call method="addObserver">
+                <argument id="import_attribute_set.observer.copy.parent.attribute.set.update" type="service"/>
+            </call>
+            <call method="addObserver">
+                <argument id="import_attribute_set.observer.attribute.set.clean.up" type="service"/>
+            </call>
         </service>
 
         <service id="import_attribute_set.processor.attribute.set.bunch" class="TechDivision\Import\Attribute\Set\Services\AttributeSetBunchProcessor">

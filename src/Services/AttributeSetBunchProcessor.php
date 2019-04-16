@@ -20,13 +20,11 @@
 
 namespace TechDivision\Import\Attribute\Set\Services;
 
+use TechDivision\Import\Actions\ActionInterface;
 use TechDivision\Import\Connection\ConnectionInterface;
 use TechDivision\Import\Repositories\EavAttributeSetRepositoryInterface;
-use TechDivision\Import\Attribute\Set\Actions\EavAttributeSetActionInterface;
-use TechDivision\Import\Attribute\Set\Actions\EavAttributeGroupActionInterface;
 use TechDivision\Import\Attribute\Set\Repositories\EntityAttributeRepositoryInterface;
 use TechDivision\Import\Attribute\Set\Repositories\EavAttributeGroupRepositoryInterface;
-use TechDivision\Import\Attribute\Actions\EntityAttributeActionInterface;
 
 /**
  * The attribute set bunch processor implementation.
@@ -71,21 +69,21 @@ class AttributeSetBunchProcessor implements AttributeSetBunchProcessorInterface
     /**
      * The attribute set action instance.
      *
-     * @var \TechDivision\Import\Attribute\Set\Actions\EavAttributeSetActionInterface
+     * @var \TechDivision\Import\Actions\ActionInterface
      */
     protected $eavAttributeSetAction;
 
     /**
      * The attribute group action instance.
      *
-     * @var \TechDivision\Import\Attribute\Set\Actions\EavAttributeGroupActionInterface
+     * @var \TechDivision\Import\Actions\ActionInterface
      */
     protected $eavAttributeGroupAction;
 
     /**
      * The entity attribute action instance.
      *
-     * @var \TechDivision\Import\Attribute\Actions\EntityAttributeActionInterface
+     * @var \TechDivision\Import\Actions\ActionInterface
      */
     protected $entityAttributeAction;
 
@@ -96,18 +94,18 @@ class AttributeSetBunchProcessor implements AttributeSetBunchProcessorInterface
      * @param \TechDivision\Import\Repositories\EavAttributeSetRepositoryInterface                 $eavAttributeSetRepository   The EAV attribute set repository instance
      * @param \TechDivision\Import\Attribute\Set\Repositories\EavAttributeGroupRepositoryInterface $eavAttributeGroupRepository The EAV attribute group repository instance
      * @param \TechDivision\Import\Attribute\Set\Repositories\EntityAttributeRepositoryInterface   $entityAttributeRepository   The EAV attribute option repository instance
-     * @param \TechDivision\Import\Attribute\Set\Actions\EavAttributeSetActionInterface            $eavAttributeSetAction       The EAV attribute set action instance
-     * @param \TechDivision\Import\Attribute\Set\Actions\EavAttributeGroupActionInterface          $eavAttributeGroupAction     The EAV attribute gropu action instance
-     * @param \TechDivision\Import\Attribute\Actions\EntityAttributeActionInterface                $entityAttributeAction       The entity attribute action instance
+     * @param \TechDivision\Import\Actions\ActionInterface                                         $eavAttributeSetAction       The EAV attribute set action instance
+     * @param \TechDivision\Import\Actions\ActionInterface                                         $eavAttributeGroupAction     The EAV attribute gropu action instance
+     * @param \TechDivision\Import\Actions\ActionInterface                                         $entityAttributeAction       The entity attribute action instance
      */
     public function __construct(
         ConnectionInterface $connection,
         EavAttributeSetRepositoryInterface $eavAttributeSetRepository,
         EavAttributeGroupRepositoryInterface $eavAttributeGroupRepository,
         EntityAttributeRepositoryInterface $entityAttributeRepository,
-        EavAttributeSetActionInterface $eavAttributeSetAction,
-        EavAttributeGroupActionInterface $eavAttributeGroupAction,
-        EntityAttributeActionInterface $entityAttributeAction
+        ActionInterface $eavAttributeSetAction,
+        ActionInterface $eavAttributeGroupAction,
+        ActionInterface $entityAttributeAction
     ) {
         $this->setConnection($connection);
         $this->setEavAttributeSetRepository($eavAttributeSetRepository);
@@ -253,11 +251,11 @@ class AttributeSetBunchProcessor implements AttributeSetBunchProcessorInterface
     /**
      * Set's the EAV attribute set action instance.
      *
-     * @param \TechDivision\Import\Attribute\Set\Actions\EavAttributeSetActionInterface $eavAttributeSetAction The attribute set action instance
+     * @param \TechDivision\Import\Actions\ActionInterface $eavAttributeSetAction The attribute set action instance
      *
      * @return void
      */
-    public function setEavAttributeSetAction(EavAttributeSetActionInterface $eavAttributeSetAction)
+    public function setEavAttributeSetAction(ActionInterface $eavAttributeSetAction)
     {
         $this->eavAttributeSetAction = $eavAttributeSetAction;
     }
@@ -265,7 +263,7 @@ class AttributeSetBunchProcessor implements AttributeSetBunchProcessorInterface
     /**
      * Return's the attribute set action instance.
      *
-     * @return \TechDivision\Import\Attribute\Set\Actions\EavAttributeSetActionInterface The attribute set action instance
+     * @return \TechDivision\Import\Actions\ActionInterface The attribute set action instance
      */
     public function getEavAttributeSetAction()
     {
@@ -275,11 +273,11 @@ class AttributeSetBunchProcessor implements AttributeSetBunchProcessorInterface
     /**
      * Set's the EAV attribute group action instance.
      *
-     * @param \TechDivision\Import\Attribute\Set\Actions\EavAttributeGroupActionInterface $eavAttributeGroupAction The attribute gropu action instance
+     * @param \TechDivision\Import\Actions\ActionInterface $eavAttributeGroupAction The attribute gropu action instance
      *
      * @return void
      */
-    public function setEavAttributeGroupAction(EavAttributeGroupActionInterface $eavAttributeGroupAction)
+    public function setEavAttributeGroupAction(ActionInterface $eavAttributeGroupAction)
     {
         $this->eavAttributeGroupAction = $eavAttributeGroupAction;
     }
@@ -287,7 +285,7 @@ class AttributeSetBunchProcessor implements AttributeSetBunchProcessorInterface
     /**
      * Return's the attribute group action instance.
      *
-     * @return \TechDivision\Import\Attribute\Set\Actions\EavAttributeGroupActionInterface The attribute group action instance
+     * @return \TechDivision\Import\Actions\ActionInterface The attribute group action instance
      */
     public function getEavAttributeGroupAction()
     {
@@ -297,11 +295,11 @@ class AttributeSetBunchProcessor implements AttributeSetBunchProcessorInterface
     /**
      * Set's the entity attribute action instance.
      *
-     * @param \TechDivision\Import\Attribute\Actions\EntityAttributeActionInterface $entityAttributeAction The entity attribute action instance
+     * @param \TechDivision\Import\Actions\ActionInterface $entityAttributeAction The entity attribute action instance
      *
      * @return void
      */
-    public function setEntityAttributeAction(EntityAttributeActionInterface $entityAttributeAction)
+    public function setEntityAttributeAction(ActionInterface $entityAttributeAction)
     {
         $this->entityAttributeAction = $entityAttributeAction;
     }
@@ -309,7 +307,7 @@ class AttributeSetBunchProcessor implements AttributeSetBunchProcessorInterface
     /**
      * Return's the entity attribute action instance.
      *
-     * @return \TechDivision\Import\Attribute\Actions\EntityAttributeActionInterface The entity attribute action instance
+     * @return \TechDivision\Import\Actions\ActionInterface The entity attribute action instance
      */
     public function getEntityAttributeAction()
     {
