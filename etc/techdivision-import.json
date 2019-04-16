@@ -93,11 +93,7 @@
               "observers": [
                 {
                   "import": [
-                    "import_attribute_set.observer.clear.attribute.set",
-                    "import_attribute_set.observer.attribute.set",
-                    "import_attribute_set.observer.attribute.group",
-                    "import_attribute_set.observer.copy.parent.attribute.set",
-                    "import_attribute_set.observer.attribute.set.clean.up"
+                    "import_attribute_set.observer.composite.replace"
                   ]
                 }
               ]
@@ -140,10 +136,7 @@
               "observers": [
                 {
                   "import": [
-                    "import_attribute_set.observer.attribute.set.update",
-                    "import_attribute_set.observer.attribute.group.update",
-                    "import_attribute_set.observer.copy.parent.attribute.set.update",
-                    "import_attribute_set.observer.attribute.set.clean.up"
+                    "import_attribute_set.observer.composite.add_update"
                   ]
                 }
               ]

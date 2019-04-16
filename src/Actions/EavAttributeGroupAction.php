@@ -26,11 +26,12 @@ use TechDivision\Import\Actions\AbstractAction;
 /**
  * An action implementation that provides CRUD functionality for EAV attribute groups.
  *
- * @author    Tim Wagner <t.wagner@techdivision.com>
- * @copyright 2019 TechDivision GmbH <info@techdivision.com>
- * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link      https://github.com/techdivision/import-attribute-set
- * @link      http://www.techdivision.com
+ * @author     Tim Wagner <t.wagner@techdivision.com>
+ * @copyright  2019 TechDivision GmbH <info@techdivision.com>
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link       https://github.com/techdivision/import-attribute-set
+ * @link       http://www.techdivision.com
+ * @deprecated Since version 4.0.0 use \TechDivision\Import\Actions\GenericIdentifierAction instead
  */
 class EavAttributeGroupAction extends AbstractAction implements EavAttributeGroupActionInterface
 {

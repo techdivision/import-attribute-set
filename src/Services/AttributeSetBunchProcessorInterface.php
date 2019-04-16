@@ -56,16 +56,23 @@ interface AttributeSetBunchProcessorInterface extends AttributeSetProcessorInter
     /**
      * Return's the attribute set action instance.
      *
-     * @return \TechDivision\Import\Attribute\Set\Actions\EavAttributeSetActionInterface The attribute set action instance
+     * @return \TechDivision\Import\Actions\ActionInterface The attribute set action instance
      */
     public function getEavAttributeSetAction();
 
     /**
      * Return's the attribute group action instance.
      *
-     * @return \TechDivision\Import\Attribute\Set\Actions\EavAttributeGroupActionInterface The attribute group action instance
+     * @return \TechDivision\Import\Actions\ActionInterface The attribute group action instance
      */
     public function getEavAttributeGroupAction();
+
+    /**
+     * Return's the entity attribute action instance.
+     *
+     * @return \TechDivision\Import\Actions\ActionInterface The entity attribute action instance
+     */
+    public function getEntityAttributeAction();
 
     /**
      * Load's and return's the EAV attribute set with the passed entity type code and attribute set name.
