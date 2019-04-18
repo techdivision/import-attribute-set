@@ -1,3 +1,13 @@
+# Version 4.0.2
+
+## Bugfixes
+
+* Add missing file-resolver configuration node
+
+## Features
+
+* None
+
 # Version 4.0.1
 
 ## Bugfixes
