@@ -1,3 +1,13 @@
+# Version 5.0.0
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Switch to latest techdivision/import-attribute version 10.0.*
+
 # Version 4.0.2
 
 ## Bugfixes
