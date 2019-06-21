@@ -1,3 +1,13 @@
+# Version 8.0.0
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Switch to latest techdivision/import-attribute version 13.*
+
 # Version 7.0.0
 
 ## Bugfixes
