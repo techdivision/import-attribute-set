@@ -5,8 +5,9 @@
 
     <services>
 
-        <service id="import_attribute_set.repository.sql.statement" class="TechDivision\Import\Attribute\Set\Repositories\SqlStatementRepository"/>
-
+        <service id="import_attribute_set.repository.sql.statement" class="TechDivision\Import\Attribute\Set\Repositories\SqlStatementRepository">
+            <argument type="service" id="import.util.sql.compilers"/>
+        </service>
         <service id="import_attribute_set.repository.entity.attribute" class="TechDivision\Import\Attribute\Set\Repositories\EntityAttributeRepository">
             <argument type="service" id="connection"/>
             <argument type="service" id="import_attribute_set.repository.sql.statement"/>

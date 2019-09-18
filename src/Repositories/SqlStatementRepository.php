@@ -42,7 +42,7 @@ class SqlStatementRepository extends \TechDivision\Import\Attribute\Repositories
     private $statements = array(
         SqlStatementKeys::CREATE_ATTRIBUTE_SET =>
             'INSERT
-               INTO eav_attribute_set
+               INTO ${table:eav_attribute_set}
                     (entity_type_id,
                      attribute_set_name,
                      sort_order)
@@ -51,7 +51,7 @@ class SqlStatementRepository extends \TechDivision\Import\Attribute\Repositories
                      :sort_order)',
         SqlStatementKeys::CREATE_ATTRIBUTE_GROUP =>
             'INSERT
-               INTO eav_attribute_group
+               INTO ${table:eav_attribute_group}
                     (attribute_set_id,
                      attribute_group_name,
                      sort_order,
@@ -65,13 +65,13 @@ class SqlStatementRepository extends \TechDivision\Import\Attribute\Repositories
                      :attribute_group_code,
                      :tab_group_code)',
         SqlStatementKeys::UPDATE_ATTRIBUTE_SET =>
-            'UPDATE eav_attribute_set
+            'UPDATE ${table:eav_attribute_set}
                 SET entity_type_id = :entity_type_id,
                     attribute_set_name = :attribute_set_name,
                     sort_order = :sort_order
               WHERE attribute_set_id = :attribute_set_id',
         SqlStatementKeys::UPDATE_ATTRIBUTE_GROUP =>
-            'UPDATE eav_attribute_group
+            'UPDATE ${table:eav_attribute_group}
                 SET attribute_set_id = :attribute_set_id,
                     attribute_group_name = :attribute_group_name,
                     sort_order = :sort_order,
@@ -80,39 +80,39 @@ class SqlStatementRepository extends \TechDivision\Import\Attribute\Repositories
                     tab_group_code = :tab_group_code
               WHERE attribute_group_id = :attribute_group_id',
         SqlStatementKeys::DELETE_ATTRIBUTE_SET =>
-            'DELETE FROM eav_attribute_set WHERE attribute_set_id = :attribute_set_id',
+            'DELETE FROM ${table:eav_attribute_set} WHERE attribute_set_id = :attribute_set_id',
         SqlStatementKeys::DELETE_ATTRIBUTE_GROUP =>
-            'DELETE FROM eav_attribute_group WHERE attribute_group_id = :attribute_group_id',
+            'DELETE FROM ${table:eav_attribute_group} WHERE attribute_group_id = :attribute_group_id',
         SqlStatementKeys::ENTITY_ATTRIBUTES_BY_ATTRIBUTE_GROUP_ID =>
             'SELECT *
-               FROM eav_entity_attribute
+               FROM ${table:eav_entity_attribute}
               WHERE attribute_group_id = :attribute_group_id',
         SqlStatementKeys::ENTITY_ATTRIBUTES_BY_ENTITY_TYPE_ID_AND_ATTRIBUTE_SET_NAME =>
             'SELECT t0.*
-               FROM eav_entity_attribute t0
-         INNER JOIN eav_attribute_set t1
+               FROM ${table:eav_entity_attribute} t0
+         INNER JOIN ${table:eav_attribute_set} t1
                  ON t1.attribute_set_name = :attribute_set_name
 	            AND t1.entity_type_id = :entity_type_id
                 AND t0.attribute_set_id = t1.attribute_set_id',
         SqlStatementKeys::EAV_ATTRIBUTE_GROUP_BY_ATTRIBUTE_SET_ID_AND_ATTRIBUTE_GROUP_CODE =>
             'SELECT *
-               FROM eav_attribute_group
+               FROM ${table:eav_attribute_group}
               WHERE attribute_set_id = :attribute_set_id
                 AND attribute_group_code = :attribute_group_code'
     );
 
     /**
-     * Initialize the the SQL statements.
+     * Initializes the SQL statement repository with the primary key and table prefix utility.
+     *
+     * @param \IteratorAggregate<\TechDivision\Import\Utils\SqlCompilerInterface> $compilers The array with the compiler instances
      */
-    public function __construct()
+    public function __construct(\IteratorAggregate $compilers)
     {
 
-        // call the parent constructor
-        parent::__construct();
+        // pass primary key + table prefix utility to parent instance
+        parent::__construct($compilers);
 
-        // merge the class statements
-        foreach ($this->statements as $key => $statement) {
-            $this->preparedStatements[$key] = $statement;
-        }
+        // compile the SQL statements
+        $this->compile($this->statements);
     }
 }

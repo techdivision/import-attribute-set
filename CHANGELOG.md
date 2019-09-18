@@ -1,3 +1,14 @@
+# Version 12.0.0
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Add techdivision/import-cli-simple#216
+* Switch to latest techdivision/import-attribute version 17.*
+
 # Version 11.0.0
 
 ## Bugfixes
