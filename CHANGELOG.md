@@ -7,6 +7,7 @@
 ## Features
 
 * Add techdivision/import-cli-simple#216
+* Remove unnecessary identifiers from configuration
 * Switch to latest techdivision/import-attribute version 17.*
 
 # Version 11.0.0
