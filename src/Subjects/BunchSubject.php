@@ -20,7 +20,6 @@
 
 namespace TechDivision\Import\Attribute\Set\Subjects;
 
-use TechDivision\Import\Utils\EntityTypeCodes;
 use TechDivision\Import\Subjects\AbstractEavSubject;
 use TechDivision\Import\Attribute\Utils\RegistryKeys;
 use TechDivision\Import\Attribute\Set\Utils\MemberNames;
@@ -66,20 +65,6 @@ class BunchSubject extends AbstractEavSubject implements BunchSubjectInterface
     protected $entityTypeCodeAndAttributeSetNameIdMapping = array();
 
     /**
-     * Mapping for the virtual entity type code to the real Magento 2 EAV entity type code.
-     *
-     * @var array
-     */
-    protected $entityTypeCodeMappings = array(
-        EntityTypeCodes::EAV_ATTRIBUTE             => EntityTypeCodes::CATALOG_PRODUCT,
-        EntityTypeCodes::EAV_ATTRIBUTE_SET         => EntityTypeCodes::CATALOG_PRODUCT,
-        EntityTypeCodes::CATALOG_PRODUCT           => EntityTypeCodes::CATALOG_PRODUCT,
-        EntityTypeCodes::CATALOG_CATEGORY          => EntityTypeCodes::CATALOG_CATEGORY,
-        EntityTypeCodes::CATALOG_PRODUCT_PRICE     => EntityTypeCodes::CATALOG_PRODUCT,
-        EntityTypeCodes::CATALOG_PRODUCT_INVENTORY => EntityTypeCodes::CATALOG_PRODUCT
-    );
-
-    /**
      * Intializes the previously loaded global data for exactly one bunch.
      *
      * @param string $serial The serial of the actual import
@@ -96,7 +81,7 @@ class BunchSubject extends AbstractEavSubject implements BunchSubjectInterface
         $this->entityTypes = $status[RegistryKeys::GLOBAL_DATA][RegistryKeys::ENTITY_TYPES];
 
         // initialize the default entity type code with the value from the configuration
-        $this->defaultEntityTypeCode = $this->entityTypeCodeMappings[$this->getConfiguration()->getConfiguration()->getEntityTypeCode()];
+        $this->defaultEntityTypeCode = $this->getEntityTypeCode();
 
         // prepare the callbacks
         parent::setUp($serial);
@@ -147,15 +132,7 @@ class BunchSubject extends AbstractEavSubject implements BunchSubjectInterface
         }
 
         // load the entity type code from the configuration
-        $entityTypeCode =  $entityType ? $entityType[MemberNames::ENTITY_TYPE_CODE] : $this->getConfiguration()->getConfiguration()->getEntityTypeCode();
-
-        // try to map the entity type code
-        if (isset($this->entityTypeCodeToAttributeSetMappings[$entityTypeCode])) {
-            $entityTypeCode = $this->entityTypeCodeToAttributeSetMappings[$entityTypeCode];
-        }
-
-        // return the (mapped) entity type code
-        return $entityTypeCode;
+        return  $entityType ? $entityType[MemberNames::ENTITY_TYPE_CODE] : parent::getEntityTypeCode();
     }
 
     /**
