@@ -24,6 +24,50 @@
     "general": {
       "eav_attribute_set": [
         {
+          "name": "validate",
+          "plugins": [
+            {
+              "id": "import.plugin.subject",
+              "listeners": [
+                {
+                  "plugin.process.success": [
+                    "import.listener.stop.validation"
+                  ]
+                }
+              ],
+              "subjects": [
+                {
+                  "id": "import.subject.validator",
+                  "create-imported-file": false,
+                  "file-resolver": {
+                    "prefix": "attribute-set-import"
+                  },
+                  "listeners": [
+                    {
+                      "subject.artefact.header.row.process.start": [
+                        "import.listener.validate.header.row"
+                      ]
+                    }
+                  ],
+                  "observers": [
+                    {
+                      "import": [
+                        "import_attribute.observer.composite.base.validate"
+                      ]
+                    }
+                  ],
+                  "callbacks": [
+                    {
+                      "entity_type_code": [ "import.callback.entity.type.code.validator" ],
+                      "based_on": [ "import_attribute_set.callback.attribute.set.name.validator" ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
           "name": "delete",
           "plugins": [
             {

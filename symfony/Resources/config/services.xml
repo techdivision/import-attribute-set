@@ -79,6 +79,13 @@
         </service>
 
         <!--
+         | The DI configuration for the callbacks.
+         |-->
+        <service id="import_attribute_set.callback.attribute.set.name.validator" class="TechDivision\Import\Attribute\Set\Callbacks\AttributeSetNameValidatorCallback">
+            <argument type="service" id="import.loader.attribute.set.name"/>
+        </service>
+
+        <!--
          | The DI configuration for the composite observers of the attribute set replace operation.
          |-->
         <service id="import_attribute_set.observer.composite.replace" class="TechDivision\Import\Observers\GenericCompositeObserver">
