@@ -1,37 +1,10 @@
 {
-  "shortcuts": {
-    "general": {
-      "eav_attribute_set": {
-        "validate": [
-          "general/general/global-data",
-          "general/general/move-files",
-          "general/eav_attribute_set/validate"
-        ],
-        "delete": [
-          "general/general/global-data",
-          "general/general/move-files",
-          "general/eav_attribute_set/delete"
-        ],
-        "replace": [
-          "general/general/global-data",
-          "general/general/move-files",
-          "general/eav_attribute_set/replace"
-        ],
-        "add-update": [
-          "general/general/global-data",
-          "general/general/move-files",
-          "general/eav_attribute_set/add-update"
-        ]
-      }
-    }
-  },
   "operations": {
     "general": {
-      "eav_attribute_set": [
-        {
-          "name": "validate",
-          "plugins": [
-            {
+      "eav_attribute_set": {
+        "validate": {
+          "plugins": {
+            "subject": {
               "id": "import.plugin.subject",
               "listeners": [
                 {
@@ -70,15 +43,11 @@
                 }
               ]
             }
-          ]
+          }
         },
-        {
-          "name": "delete",
-          "plugins": [
-            {
-              "id": "import.plugin.global.data"
-            },
-            {
+        "delete": {
+          "plugins": {
+            "subject": {
               "id": "import.plugin.subject",
               "subjects": [
                 {
@@ -96,15 +65,11 @@
                 }
               ]
             }
-          ]
+          }
         },
-        {
-          "name": "replace",
-          "plugins": [
-            {
-              "id": "import.plugin.global.data"
-            },
-            {
+        "replace": {
+          "plugins": {
+            "subject": {
               "id": "import.plugin.subject",
               "subjects": [
                 {
@@ -122,12 +87,11 @@
                 }
               ]
             }
-          ]
+          }
         },
-        {
-          "name": "add-update",
-          "plugins": [
-            {
+        "add-update": {
+          "plugins": {
+            "subject": {
               "id": "import.plugin.subject",
               "subjects": [
                 {
@@ -150,9 +114,9 @@
                 }
               ]
             }
-          ]
+          }
         }
-      ]
+      }
     }
   }
 }
