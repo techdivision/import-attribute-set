@@ -1,3 +1,9 @@
+# Version 13.0.0
+
+## Features
+
+* Switch to latest techdivision/import-attribute version 18.*
+
 # Version 12.0.1
 
 ## Bugfixes
