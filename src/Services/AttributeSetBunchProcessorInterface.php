@@ -33,6 +33,13 @@ interface AttributeSetBunchProcessorInterface extends AttributeSetProcessorInter
 {
 
     /**
+     * Return's the raw entity loader instance.
+     *
+     * @return \TechDivision\Import\Loaders\LoaderInterface The raw entity loader instance
+     */
+    public function getRawEntityLoader();
+
+    /**
      * Return's the attribute set repository instance.
      *
      * @return \TechDivision\Import\Repositories\EavAttributeSetRepositoryInterface The attribute set repository instance
@@ -73,6 +80,16 @@ interface AttributeSetBunchProcessorInterface extends AttributeSetProcessorInter
      * @return \TechDivision\Import\Actions\ActionInterface The entity attribute action instance
      */
     public function getEntityAttributeAction();
+
+    /**
+     * Load's and return's a raw entity without primary key but the mandatory members only and nulled values.
+     *
+     * @param string $entityTypeCode The entity type code to return the raw entity for
+     * @param array  $data           An array with data that will be used to initialize the raw entity with
+     *
+     * @return array The initialized entity
+     */
+    public function loadRawEntity($entityTypeCode, array $data = array());
 
     /**
      * Load's and return's the EAV attribute set with the passed entity type code and attribute set name.

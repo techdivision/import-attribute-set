@@ -21,6 +21,7 @@
 namespace TechDivision\Import\Attribute\Set\Services;
 
 use TechDivision\Import\Actions\ActionInterface;
+use TechDivision\Import\Loaders\LoaderInterface;
 use TechDivision\Import\Connection\ConnectionInterface;
 use TechDivision\Import\Repositories\EavAttributeSetRepositoryInterface;
 use TechDivision\Import\Attribute\Set\Repositories\EntityAttributeRepositoryInterface;
@@ -88,6 +89,13 @@ class AttributeSetBunchProcessor implements AttributeSetBunchProcessorInterface
     protected $entityAttributeAction;
 
     /**
+     * The raw entity loader instance.
+     *
+     * @var \TechDivision\Import\Loaders\LoaderInterface
+     */
+    protected $rawEntityLoader;
+
+    /**
      * Initialize the processor with the necessary repository and action instances.
      *
      * @param \TechDivision\Import\Connection\ConnectionInterface                                  $connection                  The connection to use
@@ -97,6 +105,7 @@ class AttributeSetBunchProcessor implements AttributeSetBunchProcessorInterface
      * @param \TechDivision\Import\Actions\ActionInterface                                         $eavAttributeSetAction       The EAV attribute set action instance
      * @param \TechDivision\Import\Actions\ActionInterface                                         $eavAttributeGroupAction     The EAV attribute gropu action instance
      * @param \TechDivision\Import\Actions\ActionInterface                                         $entityAttributeAction       The entity attribute action instance
+     * @param \TechDivision\Import\Loaders\LoaderInterface                                         $rawEntityLoader             The raw entity loader instance
      */
     public function __construct(
         ConnectionInterface $connection,
@@ -105,7 +114,8 @@ class AttributeSetBunchProcessor implements AttributeSetBunchProcessorInterface
         EntityAttributeRepositoryInterface $entityAttributeRepository,
         ActionInterface $eavAttributeSetAction,
         ActionInterface $eavAttributeGroupAction,
-        ActionInterface $entityAttributeAction
+        ActionInterface $entityAttributeAction,
+        LoaderInterface $rawEntityLoader
     ) {
         $this->setConnection($connection);
         $this->setEavAttributeSetRepository($eavAttributeSetRepository);
@@ -114,6 +124,29 @@ class AttributeSetBunchProcessor implements AttributeSetBunchProcessorInterface
         $this->setEavAttributeSetAction($eavAttributeSetAction);
         $this->setEavAttributeGroupAction($eavAttributeGroupAction);
         $this->setEntityAttributeAction($entityAttributeAction);
+        $this->setRawEntityLoader($rawEntityLoader);
+    }
+
+    /**
+     * Set's the raw entity loader instance.
+     *
+     * @param \TechDivision\Import\Loaders\LoaderInterface $rawEntityLoader The raw entity loader instance to set
+     *
+     * @return void
+     */
+    public function setRawEntityLoader(LoaderInterface $rawEntityLoader)
+    {
+        $this->rawEntityLoader = $rawEntityLoader;
+    }
+
+    /**
+     * Return's the raw entity loader instance.
+     *
+     * @return \TechDivision\Import\Loaders\LoaderInterface The raw entity loader instance
+     */
+    public function getRawEntityLoader()
+    {
+        return $this->rawEntityLoader;
     }
 
     /**
@@ -312,6 +345,19 @@ class AttributeSetBunchProcessor implements AttributeSetBunchProcessorInterface
     public function getEntityAttributeAction()
     {
         return $this->entityAttributeAction;
+    }
+
+    /**
+     * Load's and return's a raw entity without primary key but the mandatory members only and nulled values.
+     *
+     * @param string $entityTypeCode The entity type code to return the raw entity for
+     * @param array  $data           An array with data that will be used to initialize the raw entity with
+     *
+     * @return array The initialized entity
+     */
+    public function loadRawEntity($entityTypeCode, array $data = array())
+    {
+        return $this->getRawEntityLoader()->load($entityTypeCode, $data);
     }
 
     /**

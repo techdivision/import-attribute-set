@@ -77,6 +77,9 @@
                   "file-resolver": {
                     "prefix": "attribute-set-import"
                   },
+                  "params": {
+                    "clean-up-empty-columns": []
+                  },
                   "observers": [
                     {
                       "import": [
@@ -100,7 +103,8 @@
                     "prefix": "attribute-set-import"
                   },
                   "params": {
-                    "copy-parent-on-update": false
+                    "copy-parent-on-update": false,
+                    "clean-up-empty-columns": []
                   },
                   "observers": [
                     {

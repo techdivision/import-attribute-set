@@ -61,15 +61,19 @@
         </service>
         <service id="import_attribute_set.observer.attribute.set" class="TechDivision\Import\Attribute\Set\Observers\AttributeSetObserver">
             <argument type="service" id="import_attribute_set.processor.attribute.set.bunch"/>
+            <argument type="service" id="import.observer.dynamic.attribute.loader"/>
         </service>
         <service id="import_attribute_set.observer.attribute.set.update" class="TechDivision\Import\Attribute\Set\Observers\AttributeSetUpdateObserver">
             <argument type="service" id="import_attribute_set.processor.attribute.set.bunch"/>
+            <argument type="service" id="import.observer.dynamic.attribute.loader"/>
         </service>
         <service id="import_attribute_set.observer.attribute.group" class="TechDivision\Import\Attribute\Set\Observers\AttributeGroupObserver">
             <argument type="service" id="import_attribute_set.processor.attribute.set.bunch"/>
+            <argument type="service" id="import.observer.dynamic.attribute.loader"/>
         </service>
         <service id="import_attribute_set.observer.attribute.group.update" class="TechDivision\Import\Attribute\Set\Observers\AttributeGroupUpdateObserver">
             <argument type="service" id="import_attribute_set.processor.attribute.set.bunch"/>
+            <argument type="service" id="import.observer.dynamic.attribute.loader"/>
         </service>
         <service id="import_attribute_set.observer.copy.parent.attribute.set" class="TechDivision\Import\Attribute\Set\Observers\CopyParentAttributeSetObserver">
             <argument type="service" id="import_attribute_set.processor.attribute.set.bunch"/>
@@ -124,6 +128,12 @@
             </call>
         </service>
 
+        <service id="import_attribute_set.loader.raw.entity" class="TechDivision\Import\Attribute\Set\Loaders\RawEntityLoader">
+            <argument type="service" id="connection"/>
+            <argument type="service" id="import.loader.column.metadata"/>
+            <argument type="service" id="import.loader.raw.entity"/>
+        </service>
+
         <service id="import_attribute_set.processor.attribute.set.bunch" class="TechDivision\Import\Attribute\Set\Services\AttributeSetBunchProcessor">
             <argument type="service" id="connection"/>
             <argument type="service" id="import.repository.eav.attribute.set"/>
@@ -132,6 +142,7 @@
             <argument type="service" id="import_attribute_set.action.eav.attribute.set"/>
             <argument type="service" id="import_attribute_set.action.eav.attribute.group"/>
             <argument type="service" id="import_attribute.action.entity.attribute"/>
+            <argument type="service" id="import_attribute_set.loader.raw.entity"/>
         </service>
 
         <service id="import_attribute_set.subject.bunch" class="TechDivision\Import\Attribute\Set\Subjects\BunchSubject" shared="false">

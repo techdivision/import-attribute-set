@@ -1,4 +1,18 @@
+# Version 14.0.0
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Add #PAC-47
+
 # Version 13.0.0
+
+## Bugfixes
+
+* None
 
 ## Features
 

@@ -23,6 +23,8 @@ namespace TechDivision\Import\Attribute\Set\Subjects;
 use TechDivision\Import\Subjects\AbstractEavSubject;
 use TechDivision\Import\Attribute\Utils\RegistryKeys;
 use TechDivision\Import\Attribute\Set\Utils\MemberNames;
+use TechDivision\Import\Attribute\Set\Utils\ConfigurationKeys;
+use TechDivision\Import\Subjects\CleanUpColumnsSubjectInterface;
 
 /**
  * The subject implementation that handles the business logic to persist attribute sets.
@@ -33,7 +35,7 @@ use TechDivision\Import\Attribute\Set\Utils\MemberNames;
  * @link      https://github.com/techdivision/import-attribute-set
  * @link      http://www.techdivision.com
  */
-class BunchSubject extends AbstractEavSubject implements BunchSubjectInterface
+class BunchSubject extends AbstractEavSubject implements BunchSubjectInterface, CleanUpColumnsSubjectInterface
 {
 
     /**
@@ -236,5 +238,26 @@ class BunchSubject extends AbstractEavSubject implements BunchSubjectInterface
     public function getLastAttributeSet()
     {
         return $this->lastAttributeSet;
+    }
+
+    /**
+     * Merge the columns from the configuration with all image type columns to define which
+     * columns should be cleaned-up.
+     *
+     * @return array The columns that has to be cleaned-up
+     */
+    public function getCleanUpColumns()
+    {
+
+        // initialize the array for the columns that has to be cleaned-up
+        $cleanUpColumns = array();
+
+        // query whether or not an array has been specified in the configuration
+        if ($this->getConfiguration()->hasParam(ConfigurationKeys::CLEAN_UP_EMPTY_COLUMNS)) {
+            $cleanUpColumns = $this->getConfiguration()->getParam(ConfigurationKeys::CLEAN_UP_EMPTY_COLUMNS);
+        }
+
+        // return the array with the column names
+        return $cleanUpColumns;
     }
 }

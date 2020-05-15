@@ -20,8 +20,13 @@
 
 namespace TechDivision\Import\Attribute\Set\Observers;
 
+use TechDivision\Import\Utils\BackendTypeKeys;
+use TechDivision\Import\Observers\AttributeLoaderInterface;
+use TechDivision\Import\Observers\DynamicAttributeObserverInterface;
 use TechDivision\Import\Attribute\Set\Utils\ColumnKeys;
 use TechDivision\Import\Attribute\Set\Utils\MemberNames;
+use TechDivision\Import\Attribute\Set\Utils\EntityTypeCodes;
+use TechDivision\Import\Attribute\Set\Services\AttributeSetBunchProcessorInterface;
 
 /**
  * Observer that create's the EAV attribute set itself.
@@ -32,8 +37,40 @@ use TechDivision\Import\Attribute\Set\Utils\MemberNames;
  * @link      https://github.com/techdivision/import-attribute-set
  * @link      http://www.techdivision.com
  */
-class AttributeSetObserver extends AbstractAttributeSetObserver
+class AttributeSetObserver extends AbstractAttributeSetObserver implements DynamicAttributeObserverInterface
 {
+
+    /**
+     * The attribute loader instance.
+     *
+     * @var \TechDivision\Import\Observers\AttributeLoaderInterface
+     */
+    protected $attributeLoader;
+
+    /**
+     * Initialize the dedicated column.
+     *
+     * @var array
+     */
+    protected $columns = array(MemberNames::SORT_ORDER => array(ColumnKeys::SORT_ORDER, BackendTypeKeys::BACKEND_TYPE_INT));
+
+    /**
+     * Initializes the observer with the passed subject instance.
+     *
+     * @param \TechDivision\Import\Attribute\Set\Services\AttributeSetBunchProcessorInterface $attributeSetBunchProcessor The attribute set bunch processor instance
+     * @param \TechDivision\Import\Observers\AttributeLoaderInterface                         $attributeLoader            The attribute loader instance
+     */
+    public function __construct(
+        AttributeSetBunchProcessorInterface $attributeSetBunchProcessor,
+        AttributeLoaderInterface $attributeLoader = null
+    ) {
+
+        // set the attribute loader
+        $this->attributeLoader = $attributeLoader;
+
+        // pass the processor to th eparend constructor
+        parent::__construct($attributeSetBunchProcessor);
+    }
 
     /**
      * Process the observer's business logic.
@@ -61,10 +98,21 @@ class AttributeSetObserver extends AbstractAttributeSetObserver
         $attributeSet = $this->initializeAttribute($this->prepareAttributes());
 
         // persist the values and set the new attribute set ID
-        $attributeSet[MemberNames::ATTRIBUTE_SET_ID] = $this->persistAttributeSet($this->initializeAttribute($this->prepareAttributes()));
+        $attributeSet[MemberNames::ATTRIBUTE_SET_ID] = $this->persistAttributeSet($this->initializeAttribute($this->prepareDynamicAttributes()));
 
         // temporarily persist the attribute set for processing the attribute groups
         $this->setLastAttributeSet($attributeSet);
+    }
+
+    /**
+     * Appends the dynamic to the static attributes for the EAV attribute
+     * and returns them.
+     *
+     * @return array The array with all available attributes
+     */
+    protected function prepareDynamicAttributes()
+    {
+        return array_merge($this->prepareAttributes(), $this->attributeLoader ? $this->attributeLoader->load($this, $this->columns) : array());
     }
 
     /**
@@ -79,18 +127,30 @@ class AttributeSetObserver extends AbstractAttributeSetObserver
         $entityType = $this->getEntityType($this->getValue(ColumnKeys::ENTITY_TYPE_CODE));
         $entityTypeId = $entityType[MemberNames::ENTITY_TYPE_ID];
 
-        // load the attribute set values from the column
-        $sortOrder = $this->getValue(ColumnKeys::SORT_ORDER, 0);
+        // load the attribute set names from the column
         $attributeSetName = $this->getValue(ColumnKeys::ATTRIBUTE_SET_NAME);
 
         // return the prepared product
         return $this->initializeEntity(
-            array(
-                MemberNames::ENTITY_TYPE_ID     => $entityTypeId,
-                MemberNames::ATTRIBUTE_SET_NAME => $attributeSetName,
-                MemberNames::SORT_ORDER         => $sortOrder,
+            $this->loadRawEntity(
+                array(
+                    MemberNames::ENTITY_TYPE_ID     => $entityTypeId,
+                    MemberNames::ATTRIBUTE_SET_NAME => $attributeSetName
+                )
             )
         );
+    }
+
+    /**
+     * Load's and return's a raw customer entity without primary key but the mandatory members only and nulled values.
+     *
+     * @param array $data An array with data that will be used to initialize the raw entity with
+     *
+     * @return array The initialized entity
+     */
+    protected function loadRawEntity(array $data = array())
+    {
+        return $this->getAttributeSetBunchProcessor()->loadRawEntity(EntityTypeCodes::EAV_ATTRIBUTE_SET, $data);
     }
 
     /**
