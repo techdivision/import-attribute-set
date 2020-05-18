@@ -41,43 +41,20 @@ class SqlStatementRepository extends \TechDivision\Import\Attribute\Repositories
      */
     private $statements = array(
         SqlStatementKeys::CREATE_ATTRIBUTE_SET =>
-            'INSERT
-               INTO ${table:eav_attribute_set}
-                    (entity_type_id,
-                     attribute_set_name,
-                     sort_order)
-             VALUES (:entity_type_id,
-                     :attribute_set_name,
-                     :sort_order)',
+            'INSERT ${table:eav_attribute_set}
+                    (${column-names:eav_attribute_set})
+             VALUES (${column-placeholders:eav_attribute_set})',
         SqlStatementKeys::CREATE_ATTRIBUTE_GROUP =>
-            'INSERT
-               INTO ${table:eav_attribute_group}
-                    (attribute_set_id,
-                     attribute_group_name,
-                     sort_order,
-                     default_id,
-                     attribute_group_code,
-                     tab_group_code)
-             VALUES (:attribute_set_id,
-                     :attribute_group_name,
-                     :sort_order,
-                     :default_id,
-                     :attribute_group_code,
-                     :tab_group_code)',
+            'INSERT ${table:eav_attribute_group}
+                    (${column-names:eav_attribute_group})
+             VALUES (${column-placeholders:eav_attribute_group})',
         SqlStatementKeys::UPDATE_ATTRIBUTE_SET =>
             'UPDATE ${table:eav_attribute_set}
-                SET entity_type_id = :entity_type_id,
-                    attribute_set_name = :attribute_set_name,
-                    sort_order = :sort_order
+                SET ${column-values:eav_attribute_set}
               WHERE attribute_set_id = :attribute_set_id',
         SqlStatementKeys::UPDATE_ATTRIBUTE_GROUP =>
             'UPDATE ${table:eav_attribute_group}
-                SET attribute_set_id = :attribute_set_id,
-                    attribute_group_name = :attribute_group_name,
-                    sort_order = :sort_order,
-                    default_id = :default_id,
-                    attribute_group_code = :attribute_group_code,
-                    tab_group_code = :tab_group_code
+                SET ${column-values:eav_attribute_group}
               WHERE attribute_group_id = :attribute_group_id',
         SqlStatementKeys::DELETE_ATTRIBUTE_SET =>
             'DELETE FROM ${table:eav_attribute_set} WHERE attribute_set_id = :attribute_set_id',

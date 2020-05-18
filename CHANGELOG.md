@@ -1,3 +1,13 @@
+# Version 14.1.0
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Replace default SQL statement compiler with dynamic compiler implementation
+
 # Version 14.0.0
 
 ## Bugfixes
