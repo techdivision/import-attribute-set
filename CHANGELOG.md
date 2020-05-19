@@ -1,3 +1,13 @@
+# Version 14.1.1
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Remove unneccessary clean-up-empty-columns array from configuration of replace operation
+
 # Version 14.1.0
 
 ## Bugfixes
