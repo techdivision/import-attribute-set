@@ -6,28 +6,35 @@
     <services>
 
         <!--
-         | The DI utility configuration
+         | The DI configuration for the entity mergers
          |-->
-        <service id="import_attribute_set.util.sql.compilers" class="\ArrayObject">
+        <service id="import_attribute_set.loader.header.mapping.attribute.set" class="TechDivision\Import\Loaders\EntityTypeHeaderMappingLoader">
+            <argument type="service" id="import.loader.header.mapping"/>
+            <argument type="constant">TechDivision\Import\Attribute\Set\Utils\EntityTypeCodes::EAV_ATTRIBUTE_SET</argument>
+        </service>
+        <service id="import_attribute_set.loader.header.mapping.attribute.group" class="TechDivision\Import\Loaders\EntityTypeHeaderMappingLoader">
+            <argument type="service" id="import.loader.header.mapping"/>
+            <argument type="constant">TechDivision\Import\Attribute\Set\Utils\EntityTypeCodes::EAV_ATTRIBUTE_GROUP</argument>
+        </service>
+        <service id="import_attribute_set.entity.merger.empty.columns.attribute.set" class="TechDivision\Import\Observers\EntityMergers\CleanUpColumnsEntityMerger">
+            <argument type="service" id="import_attribute_set.loader.header.mapping.attribute.set"/>
+        </service>
+        <service id="import_attribute_set.entity.merger.empty.columns.attribute.group" class="TechDivision\Import\Observers\EntityMergers\CleanUpColumnsEntityMerger">
+            <argument type="service" id="import_attribute_set.loader.header.mapping.attribute.group"/>
+        </service>
+        <service id="import_attribute_set.entity.merger.composite.attribute.set" class="TechDivision\Import\Observers\EntityMergers\GenericCompositeEntityMerger">
             <call method="append">
-                <argument id="import.util.primary.key" type="service"/>
+                <argument type="service" id="import_attribute_set.entity.merger.empty.columns.attribute.set"/>
             </call>
+        </service>
+        <service id="import_attribute_set.entity.merger.composite.attribute.group" class="TechDivision\Import\Observers\EntityMergers\GenericCompositeEntityMerger">
             <call method="append">
-                <argument id="import.util.table.prefix" type="service"/>
-            </call>
-            <call method="append">
-                <argument id="import.util.column.names" type="service"/>
-            </call>
-            <call method="append">
-                <argument id="import.util.column.placeholders" type="service"/>
-            </call>
-            <call method="append">
-                <argument id="import.util.column.values" type="service"/>
+                <argument type="service" id="import_attribute_set.entity.merger.empty.columns.attribute.group"/>
             </call>
         </service>
 
         <service id="import_attribute_set.repository.sql.statement" class="TechDivision\Import\Attribute\Set\Repositories\SqlStatementRepository">
-            <argument type="service" id="import_attribute_set.util.sql.compilers"/>
+            <argument type="service" id="import.util.sql.compilers"/>
         </service>
         <service id="import_attribute_set.repository.entity.attribute" class="TechDivision\Import\Attribute\Set\Repositories\EntityAttributeRepository">
             <argument type="service" id="connection"/>
@@ -83,18 +90,22 @@
         <service id="import_attribute_set.observer.attribute.set" class="TechDivision\Import\Attribute\Set\Observers\AttributeSetObserver">
             <argument type="service" id="import_attribute_set.processor.attribute.set.bunch"/>
             <argument type="service" id="import.observer.dynamic.attribute.loader"/>
+            <argument type="service" id="import_attribute_set.entity.merger.composite.attribute.set"/>
         </service>
         <service id="import_attribute_set.observer.attribute.set.update" class="TechDivision\Import\Attribute\Set\Observers\AttributeSetUpdateObserver">
             <argument type="service" id="import_attribute_set.processor.attribute.set.bunch"/>
             <argument type="service" id="import.observer.dynamic.attribute.loader"/>
+            <argument type="service" id="import_attribute_set.entity.merger.composite.attribute.set"/>
         </service>
         <service id="import_attribute_set.observer.attribute.group" class="TechDivision\Import\Attribute\Set\Observers\AttributeGroupObserver">
             <argument type="service" id="import_attribute_set.processor.attribute.set.bunch"/>
             <argument type="service" id="import.observer.dynamic.attribute.loader"/>
+            <argument type="service" id="import_attribute_set.entity.merger.composite.attribute.group"/>
         </service>
         <service id="import_attribute_set.observer.attribute.group.update" class="TechDivision\Import\Attribute\Set\Observers\AttributeGroupUpdateObserver">
             <argument type="service" id="import_attribute_set.processor.attribute.set.bunch"/>
             <argument type="service" id="import.observer.dynamic.attribute.loader"/>
+            <argument type="service" id="import_attribute_set.entity.merger.composite.attribute.group"/>
         </service>
         <service id="import_attribute_set.observer.copy.parent.attribute.set" class="TechDivision\Import\Attribute\Set\Observers\CopyParentAttributeSetObserver">
             <argument type="service" id="import_attribute_set.processor.attribute.set.bunch"/>

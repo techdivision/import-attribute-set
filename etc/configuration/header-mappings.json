@@ -1,0 +1,8 @@
+{
+  "header-mappings": {
+    "eav_attribute_group" : {
+      "attribute_group_sort_order": "sort_order",
+      "attribute_group_tab_group_code": "tab_group_code"
+    }
+  }
+}

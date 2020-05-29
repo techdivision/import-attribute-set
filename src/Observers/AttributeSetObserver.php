@@ -20,9 +20,12 @@
 
 namespace TechDivision\Import\Attribute\Set\Observers;
 
+use TechDivision\Import\Utils\EntityStatus;
 use TechDivision\Import\Utils\BackendTypeKeys;
+use TechDivision\Import\Observers\StateDetectorInterface;
 use TechDivision\Import\Observers\AttributeLoaderInterface;
 use TechDivision\Import\Observers\DynamicAttributeObserverInterface;
+use TechDivision\Import\Observers\EntityMergers\EntityMergerInterface;
 use TechDivision\Import\Attribute\Set\Utils\ColumnKeys;
 use TechDivision\Import\Attribute\Set\Utils\MemberNames;
 use TechDivision\Import\Attribute\Set\Utils\EntityTypeCodes;
@@ -48,6 +51,13 @@ class AttributeSetObserver extends AbstractAttributeSetObserver implements Dynam
     protected $attributeLoader;
 
     /**
+     * The entity merger instance.
+     *
+     * @var \TechDivision\Import\Observers\EntityMergers\EntityMergerInterface
+     */
+    protected $entityMerger;
+
+    /**
      * Initialize the dedicated column.
      *
      * @var array
@@ -58,18 +68,23 @@ class AttributeSetObserver extends AbstractAttributeSetObserver implements Dynam
      * Initializes the observer with the passed subject instance.
      *
      * @param \TechDivision\Import\Attribute\Set\Services\AttributeSetBunchProcessorInterface $attributeSetBunchProcessor The attribute set bunch processor instance
-     * @param \TechDivision\Import\Observers\AttributeLoaderInterface                         $attributeLoader            The attribute loader instance
+     * @param \TechDivision\Import\Observers\AttributeLoaderInterface|null                    $attributeLoader            The attribute loader instance
+     * @param \TechDivision\Import\Observers\EntityMergers\EntityMergerInterface|null         $entityMerger               The entity merger instance
+     * @param \TechDivision\Import\Observers\StateDetectorInterface|null                      $stateDetector              The state detector instance to use
      */
     public function __construct(
         AttributeSetBunchProcessorInterface $attributeSetBunchProcessor,
-        AttributeLoaderInterface $attributeLoader = null
+        AttributeLoaderInterface $attributeLoader = null,
+        EntityMergerInterface $entityMerger = null,
+        StateDetectorInterface $stateDetector = null
     ) {
 
         // set the attribute loader
         $this->attributeLoader = $attributeLoader;
+        $this->entityMerger = $entityMerger;
 
         // pass the processor to th eparend constructor
-        parent::__construct($attributeSetBunchProcessor);
+        parent::__construct($attributeSetBunchProcessor, $stateDetector);
     }
 
     /**
@@ -102,6 +117,26 @@ class AttributeSetObserver extends AbstractAttributeSetObserver implements Dynam
 
         // temporarily persist the attribute set for processing the attribute groups
         $this->setLastAttributeSet($attributeSet);
+    }
+
+    /**
+     * Merge's and return's the entity with the passed attributes and set's the
+     * passed status.
+     *
+     * @param array       $entity        The entity to merge the attributes into
+     * @param array       $attr          The attributes to be merged
+     * @param string|null $changeSetName The change set name to use
+     *
+     * @return array The merged entity
+     * @todo https://github.com/techdivision/import/issues/179
+     */
+    protected function mergeEntity(array $entity, array $attr, $changeSetName = null)
+    {
+        return array_merge(
+            $entity,
+            $this->entityMerger ? $this->entityMerger->merge($this, $entity, $attr) : $attr,
+            array(EntityStatus::MEMBER_NAME => $this->detectState($entity, $attr, $changeSetName))
+        );
     }
 
     /**

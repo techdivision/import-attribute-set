@@ -23,6 +23,7 @@ namespace TechDivision\Import\Attribute\Set\Observers;
 use TechDivision\Import\Subjects\SubjectInterface;
 use TechDivision\Import\Observers\AbstractObserver;
 use TechDivision\Import\Attribute\Set\Services\AttributeSetBunchProcessorInterface;
+use TechDivision\Import\Observers\StateDetectorInterface;
 
 /**
  * Abstract attribute observer that handles the process to import attribute set bunches.
@@ -47,10 +48,16 @@ abstract class AbstractAttributeSetObserver extends AbstractObserver
      * Initializes the observer with the passed subject instance.
      *
      * @param \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface $attributeSetBunchProcessor The attribute set bunch processor instance
+     * @param \TechDivision\Import\Observers\StateDetectorInterface|null               $stateDetector              The state detector instance to use
      */
-    public function __construct(AttributeSetBunchProcessorInterface $attributeSetBunchProcessor)
+    public function __construct(AttributeSetBunchProcessorInterface $attributeSetBunchProcessor, StateDetectorInterface $stateDetector = null)
     {
+
+        // set the attribute set bunch processor instance
         $this->attributeSetBunchProcessor = $attributeSetBunchProcessor;
+
+        // pass the state detector to the parent constructor
+        parent::__construct($stateDetector);
     }
 
     /**
