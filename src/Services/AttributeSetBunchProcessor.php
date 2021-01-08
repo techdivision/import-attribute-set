@@ -20,9 +20,9 @@
 
 namespace TechDivision\Import\Attribute\Set\Services;
 
-use TechDivision\Import\Actions\ActionInterface;
+use TechDivision\Import\Dbal\Actions\ActionInterface;
 use TechDivision\Import\Loaders\LoaderInterface;
-use TechDivision\Import\Connection\ConnectionInterface;
+use TechDivision\Import\Dbal\Connection\ConnectionInterface;
 use TechDivision\Import\Repositories\EavAttributeSetRepositoryInterface;
 use TechDivision\Import\Attribute\Set\Repositories\EntityAttributeRepositoryInterface;
 use TechDivision\Import\Attribute\Set\Repositories\EavAttributeGroupRepositoryInterface;
@@ -42,7 +42,7 @@ class AttributeSetBunchProcessor implements AttributeSetBunchProcessorInterface
     /**
      * A connection to use.
      *
-     * @var \TechDivision\Import\Connection\ConnectionInterface
+     * @var \TechDivision\Import\Dbal\Connection\ConnectionInterface
      */
     protected $connection;
 
@@ -70,21 +70,21 @@ class AttributeSetBunchProcessor implements AttributeSetBunchProcessorInterface
     /**
      * The attribute set action instance.
      *
-     * @var \TechDivision\Import\Actions\ActionInterface
+     * @var \TechDivision\Import\Dbal\Actions\ActionInterface
      */
     protected $eavAttributeSetAction;
 
     /**
      * The attribute group action instance.
      *
-     * @var \TechDivision\Import\Actions\ActionInterface
+     * @var \TechDivision\Import\Dbal\Actions\ActionInterface
      */
     protected $eavAttributeGroupAction;
 
     /**
      * The entity attribute action instance.
      *
-     * @var \TechDivision\Import\Actions\ActionInterface
+     * @var \TechDivision\Import\Dbal\Actions\ActionInterface
      */
     protected $entityAttributeAction;
 
@@ -98,13 +98,13 @@ class AttributeSetBunchProcessor implements AttributeSetBunchProcessorInterface
     /**
      * Initialize the processor with the necessary repository and action instances.
      *
-     * @param \TechDivision\Import\Connection\ConnectionInterface                                  $connection                  The connection to use
+     * @param \TechDivision\Import\Dbal\Connection\ConnectionInterface                                  $connection                  The connection to use
      * @param \TechDivision\Import\Repositories\EavAttributeSetRepositoryInterface                 $eavAttributeSetRepository   The EAV attribute set repository instance
      * @param \TechDivision\Import\Attribute\Set\Repositories\EavAttributeGroupRepositoryInterface $eavAttributeGroupRepository The EAV attribute group repository instance
      * @param \TechDivision\Import\Attribute\Set\Repositories\EntityAttributeRepositoryInterface   $entityAttributeRepository   The EAV attribute option repository instance
-     * @param \TechDivision\Import\Actions\ActionInterface                                         $eavAttributeSetAction       The EAV attribute set action instance
-     * @param \TechDivision\Import\Actions\ActionInterface                                         $eavAttributeGroupAction     The EAV attribute gropu action instance
-     * @param \TechDivision\Import\Actions\ActionInterface                                         $entityAttributeAction       The entity attribute action instance
+     * @param \TechDivision\Import\Dbal\Actions\ActionInterface                                         $eavAttributeSetAction       The EAV attribute set action instance
+     * @param \TechDivision\Import\Dbal\Actions\ActionInterface                                         $eavAttributeGroupAction     The EAV attribute gropu action instance
+     * @param \TechDivision\Import\Dbal\Actions\ActionInterface                                         $entityAttributeAction       The entity attribute action instance
      * @param \TechDivision\Import\Loaders\LoaderInterface                                         $rawEntityLoader             The raw entity loader instance
      */
     public function __construct(
@@ -152,7 +152,7 @@ class AttributeSetBunchProcessor implements AttributeSetBunchProcessorInterface
     /**
      * Set's the passed connection.
      *
-     * @param \TechDivision\Import\Connection\ConnectionInterface $connection The connection to set
+     * @param \TechDivision\Import\Dbal\Connection\ConnectionInterface $connection The connection to set
      *
      * @return void
      */
@@ -164,7 +164,7 @@ class AttributeSetBunchProcessor implements AttributeSetBunchProcessorInterface
     /**
      * Return's the connection.
      *
-     * @return \TechDivision\Import\Connection\ConnectionInterface The connection instance
+     * @return \TechDivision\Import\Dbal\Connection\ConnectionInterface The connection instance
      */
     public function getConnection()
     {
@@ -284,7 +284,7 @@ class AttributeSetBunchProcessor implements AttributeSetBunchProcessorInterface
     /**
      * Set's the EAV attribute set action instance.
      *
-     * @param \TechDivision\Import\Actions\ActionInterface $eavAttributeSetAction The attribute set action instance
+     * @param \TechDivision\Import\Dbal\Actions\ActionInterface $eavAttributeSetAction The attribute set action instance
      *
      * @return void
      */
@@ -296,7 +296,7 @@ class AttributeSetBunchProcessor implements AttributeSetBunchProcessorInterface
     /**
      * Return's the attribute set action instance.
      *
-     * @return \TechDivision\Import\Actions\ActionInterface The attribute set action instance
+     * @return \TechDivision\Import\Dbal\Actions\ActionInterface The attribute set action instance
      */
     public function getEavAttributeSetAction()
     {
@@ -306,7 +306,7 @@ class AttributeSetBunchProcessor implements AttributeSetBunchProcessorInterface
     /**
      * Set's the EAV attribute group action instance.
      *
-     * @param \TechDivision\Import\Actions\ActionInterface $eavAttributeGroupAction The attribute gropu action instance
+     * @param \TechDivision\Import\Dbal\Actions\ActionInterface $eavAttributeGroupAction The attribute gropu action instance
      *
      * @return void
      */
@@ -318,7 +318,7 @@ class AttributeSetBunchProcessor implements AttributeSetBunchProcessorInterface
     /**
      * Return's the attribute group action instance.
      *
-     * @return \TechDivision\Import\Actions\ActionInterface The attribute group action instance
+     * @return \TechDivision\Import\Dbal\Actions\ActionInterface The attribute group action instance
      */
     public function getEavAttributeGroupAction()
     {
@@ -328,7 +328,7 @@ class AttributeSetBunchProcessor implements AttributeSetBunchProcessorInterface
     /**
      * Set's the entity attribute action instance.
      *
-     * @param \TechDivision\Import\Actions\ActionInterface $entityAttributeAction The entity attribute action instance
+     * @param \TechDivision\Import\Dbal\Actions\ActionInterface $entityAttributeAction The entity attribute action instance
      *
      * @return void
      */
@@ -340,7 +340,7 @@ class AttributeSetBunchProcessor implements AttributeSetBunchProcessorInterface
     /**
      * Return's the entity attribute action instance.
      *
-     * @return \TechDivision\Import\Actions\ActionInterface The entity attribute action instance
+     * @return \TechDivision\Import\Dbal\Actions\ActionInterface The entity attribute action instance
      */
     public function getEntityAttributeAction()
     {
