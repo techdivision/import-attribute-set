@@ -98,13 +98,13 @@ class AttributeSetBunchProcessor implements AttributeSetBunchProcessorInterface
     /**
      * Initialize the processor with the necessary repository and action instances.
      *
-     * @param \TechDivision\Import\Dbal\Connection\ConnectionInterface                                  $connection                  The connection to use
+     * @param \TechDivision\Import\Dbal\Connection\ConnectionInterface                             $connection                  The connection to use
      * @param \TechDivision\Import\Repositories\EavAttributeSetRepositoryInterface                 $eavAttributeSetRepository   The EAV attribute set repository instance
      * @param \TechDivision\Import\Attribute\Set\Repositories\EavAttributeGroupRepositoryInterface $eavAttributeGroupRepository The EAV attribute group repository instance
      * @param \TechDivision\Import\Attribute\Set\Repositories\EntityAttributeRepositoryInterface   $entityAttributeRepository   The EAV attribute option repository instance
-     * @param \TechDivision\Import\Dbal\Actions\ActionInterface                                         $eavAttributeSetAction       The EAV attribute set action instance
-     * @param \TechDivision\Import\Dbal\Actions\ActionInterface                                         $eavAttributeGroupAction     The EAV attribute gropu action instance
-     * @param \TechDivision\Import\Dbal\Actions\ActionInterface                                         $entityAttributeAction       The entity attribute action instance
+     * @param \TechDivision\Import\Dbal\Actions\ActionInterface                                    $eavAttributeSetAction       The EAV attribute set action instance
+     * @param \TechDivision\Import\Dbal\Actions\ActionInterface                                    $eavAttributeGroupAction     The EAV attribute gropu action instance
+     * @param \TechDivision\Import\Dbal\Actions\ActionInterface                                    $entityAttributeAction       The entity attribute action instance
      * @param \TechDivision\Import\Loaders\LoaderInterface                                         $rawEntityLoader             The raw entity loader instance
      */
     public function __construct(
