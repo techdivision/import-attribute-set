@@ -45,40 +45,66 @@
             <argument type="service" id="import_attribute_set.repository.sql.statement"/>
         </service>
 
-        <service id="import_attribute_set.action.processor.eav.attribute.set.create" class="TechDivision\Import\Attribute\Set\Actions\Processors\EavAttributeSetCreateProcessor">
+        <service id="import_attribute_set.action.processor.eav.attribute.set.create" class="TechDivision\Import\Dbal\Collection\Actions\Processors\GenericIdentifierProcessor">
             <argument type="service" id="connection"/>
             <argument type="service" id="import_attribute_set.repository.sql.statement"/>
+            <argument type="service" id="import.util.sql.sanitizers"/>
+            <argument type="collection">
+                <argument type="constant">TechDivision\Import\Attribute\Set\Utils\SqlStatementKeys::CREATE_ATTRIBUTE_SET</argument>
+            </argument>
         </service>
-        <service id="import_attribute_set.action.processor.eav.attribute.set.update" class="TechDivision\Import\Attribute\Set\Actions\Processors\EavAttributeSetUpdateProcessor">
+        <service id="import_attribute_set.action.processor.eav.attribute.set.update" class="TechDivision\Import\Dbal\Collection\Actions\Processors\GenericIdentifierProcessor">
             <argument type="service" id="connection"/>
             <argument type="service" id="import_attribute_set.repository.sql.statement"/>
+            <argument type="service" id="import.util.sql.sanitizers"/>
+            <argument type="collection">
+                <argument type="constant">TechDivision\Import\Attribute\Set\Utils\SqlStatementKeys::UPDATE_ATTRIBUTE_SET</argument>
+            </argument>
         </service>
-        <service id="import_attribute_set.action.processor.eav.attribute.set.delete" class="TechDivision\Import\Attribute\Set\Actions\Processors\EavAttributeSetDeleteProcessor">
+        <service id="import_attribute_set.action.processor.eav.attribute.set.delete" class="TechDivision\Import\Dbal\Collection\Actions\Processors\GenericProcessor">
             <argument type="service" id="connection"/>
             <argument type="service" id="import_attribute_set.repository.sql.statement"/>
+            <argument type="service" id="import.util.sql.sanitizers"/>
+            <argument type="collection">
+                <argument type="constant">TechDivision\Import\Attribute\Set\Utils\SqlStatementKeys::DELETE_ATTRIBUTE_SET</argument>
+            </argument>
         </service>
-        <service id="import_attribute_set.action.processor.eav.attribute.group.create" class="TechDivision\Import\Attribute\Set\Actions\Processors\EavAttributeGroupCreateProcessor">
+        <service id="import_attribute_set.action.processor.eav.attribute.group.create" class="TechDivision\Import\Dbal\Collection\Actions\Processors\GenericIdentifierProcessor">
             <argument type="service" id="connection"/>
             <argument type="service" id="import_attribute_set.repository.sql.statement"/>
+            <argument type="service" id="import.util.sql.sanitizers"/>
+            <argument type="collection">
+                <argument type="constant">TechDivision\Import\Attribute\Set\Utils\SqlStatementKeys::CREATE_ATTRIBUTE_GROUP</argument>
+            </argument>
         </service>
-        <service id="import_attribute_set.action.processor.eav.attribute.group.update" class="TechDivision\Import\Attribute\Set\Actions\Processors\EavAttributeGroupUpdateProcessor">
+        <service id="import_attribute_set.action.processor.eav.attribute.group.update" class="TechDivision\Import\Dbal\Collection\Actions\Processors\GenericIdentifierProcessor">
             <argument type="service" id="connection"/>
             <argument type="service" id="import_attribute_set.repository.sql.statement"/>
+            <argument type="service" id="import.util.sql.sanitizers"/>
+            <argument type="collection">
+                <argument type="constant">TechDivision\Import\Attribute\Set\Utils\SqlStatementKeys::UPDATE_ATTRIBUTE_GROUP</argument>
+            </argument>
         </service>
-        <service id="import_attribute_set.action.processor.eav.attribute.group.delete" class="TechDivision\Import\Attribute\Set\Actions\Processors\EavAttributeGroupDeleteProcessor">
+        <service id="import_attribute_set.action.processor.eav.attribute.group.delete" class="TechDivision\Import\Dbal\Collection\Actions\Processors\GenericProcessor">
             <argument type="service" id="connection"/>
             <argument type="service" id="import_attribute_set.repository.sql.statement"/>
+            <argument type="service" id="import.util.sql.sanitizers"/>
+            <argument type="collection">
+                <argument type="constant">TechDivision\Import\Attribute\Set\Utils\SqlStatementKeys::DELETE_ATTRIBUTE_GROUP</argument>
+            </argument>
         </service>
 
-        <service id="import_attribute_set.action.eav.attribute.set" class="TechDivision\Import\Actions\GenericIdentifierAction">
+        <service id="import_attribute_set.action.eav.attribute.set" class="TechDivision\Import\Dbal\Collection\Actions\GenericIdentifierAction">
             <argument type="service" id="import_attribute_set.action.processor.eav.attribute.set.create"/>
             <argument type="service" id="import_attribute_set.action.processor.eav.attribute.set.update"/>
             <argument type="service" id="import_attribute_set.action.processor.eav.attribute.set.delete"/>
+            <argument type="constant">TechDivision\Import\Attribute\Set\Utils\MemberNames::ATTRIBUTE_SET_ID</argument>
         </service>
-        <service id="import_attribute_set.action.eav.attribute.group" class="TechDivision\Import\Actions\GenericIdentifierAction">
+        <service id="import_attribute_set.action.eav.attribute.group" class="TechDivision\Import\Dbal\Collection\Actions\GenericIdentifierAction">
             <argument type="service" id="import_attribute_set.action.processor.eav.attribute.group.create"/>
             <argument type="service" id="import_attribute_set.action.processor.eav.attribute.group.update"/>
             <argument type="service" id="import_attribute_set.action.processor.eav.attribute.group.delete"/>
+            <argument type="constant">TechDivision\Import\Attribute\Set\Utils\MemberNames::ATTRIBUTE_GROUP_ID</argument>
         </service>
 
         <service id="import_attribute_set.observer.clear.attribute.set" class="TechDivision\Import\Attribute\Set\Observers\ClearAttributeSetObserver">
