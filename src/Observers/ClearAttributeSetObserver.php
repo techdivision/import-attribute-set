@@ -59,7 +59,12 @@ class ClearAttributeSetObserver extends AbstractAttributeSetObserver
 
         // try to load the EAV attribute set with the given entity type code and attribute set name found in the CSV file
         $attributeSet = $this->loadAttributeSetByEntityTypeCodeAndAttributeSetName($entityTypeCode, $attributeSetName);
-
+        if (!$attributeSet) {
+            $this->getSubject()
+                ->getSystemLogger()
+                ->debug(sprintf('AttributeSet with code "%s" and Name "%s" can\'t be loaded!', $entityTypeCode, $attributeSetName));
+            return;
+        }
         // delete the EAV attribute set
         $this->deleteAttributeSet(array(MemberNames::ATTRIBUTE_SET_ID => $attributeSet[MemberNames::ATTRIBUTE_SET_ID]));
     }
