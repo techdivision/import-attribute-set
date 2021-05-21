@@ -1,3 +1,13 @@
+# Version 16.0.1
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Prepare generic workflow and defined deprecated classes
+
 # Version 16.0.0
 
 ## Bugfixes
