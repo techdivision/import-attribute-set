@@ -1,3 +1,13 @@
+# Version 16.0.2
+
+## Bugfixes
+
+* Fix missing import attribute_group_sort_order
+
+## Features
+
+* None
+
 # Version 16.0.0
 
 ## Bugfixes

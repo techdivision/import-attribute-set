@@ -59,4 +59,11 @@ class MemberNames extends \TechDivision\Import\Attribute\Utils\MemberNames
      * @var string
      */
     const TAB_GROUP_CODE = 'tab_group_code';
+
+    /**
+     * Name for the member 'sort_order'.
+     *
+     * @var string
+     */
+    const SORT_ORDER = 'sort_order';
 }

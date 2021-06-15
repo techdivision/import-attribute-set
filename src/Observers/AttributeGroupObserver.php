@@ -153,6 +153,7 @@ class AttributeGroupObserver extends AbstractAttributeSetObserver implements Dyn
         $tabGroupCode = $this->getValue(ColumnKeys::ATTRIBUTE_GROUP_TAB_GROUP_CODE, 'basic');
         $attributeGroupName = $this->getValue(ColumnKeys::ATTRIBUTE_GROUP_NAME);
         $attributeGroupCode = $this->getValue(ColumnKeys::ATTRIBUTE_GROUP_CODE);
+        $attributeGroupSortOrder = $this->getValue(ColumnKeys::ATTRIBUTE_GROUP_SORT_ORDER);
 
         // return the prepared product
         return $this->initializeEntity(
@@ -162,7 +163,8 @@ class AttributeGroupObserver extends AbstractAttributeSetObserver implements Dyn
                     MemberNames::ATTRIBUTE_GROUP_NAME => $attributeGroupName,
                     MemberNames::DEFAULT_ID           => $defaultId,
                     MemberNames::ATTRIBUTE_GROUP_CODE => $attributeGroupCode,
-                    MemberNames::TAB_GROUP_CODE       => $tabGroupCode
+                    MemberNames::TAB_GROUP_CODE       => $tabGroupCode,
+                    MemberNames::SORT_ORDER           => $attributeGroupSortOrder
                 )
             )
         );
