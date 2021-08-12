@@ -1,3 +1,9 @@
+# Version 17.0.0
+
+## Bugfixes
+
+* Fix fallback for attribute_group_sort_order when empty
+
 # Version 16.0.2
 
 ## Bugfixes
