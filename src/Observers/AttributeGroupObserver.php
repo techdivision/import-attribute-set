@@ -148,12 +148,15 @@ class AttributeGroupObserver extends AbstractAttributeSetObserver implements Dyn
         // load the last attribute set
         $attributeSet = $this->getLastAttributeSet();
 
+        // Backward compatibility as default
+        $groupSortOrder = $this->getValue(ColumnKeys::SORT_ORDER, 0);
+
         // load the attribute set values from the column
         $defaultId = $this->getValue(ColumnKeys::DEFAULT_ID, 0);
         $tabGroupCode = $this->getValue(ColumnKeys::ATTRIBUTE_GROUP_TAB_GROUP_CODE, 'basic');
         $attributeGroupName = $this->getValue(ColumnKeys::ATTRIBUTE_GROUP_NAME);
         $attributeGroupCode = $this->getValue(ColumnKeys::ATTRIBUTE_GROUP_CODE);
-        $attributeGroupSortOrder = $this->getValue(ColumnKeys::ATTRIBUTE_GROUP_SORT_ORDER);
+        $attributeGroupSortOrder = $this->getValue(ColumnKeys::ATTRIBUTE_GROUP_SORT_ORDER, $groupSortOrder);
 
         // return the prepared product
         return $this->initializeEntity(

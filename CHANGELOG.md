@@ -1,3 +1,13 @@
+# Version 16.0.3
+
+## Bugfixes
+
+* Fix fallback for attribute_group_sort_order when empty 
+
+## Features
+
+* None
+
 # Version 16.0.2
 
 ## Bugfixes
