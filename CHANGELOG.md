@@ -1,5 +1,9 @@
 # Version 17.0.0
 
+## Features
+
+* Refactoring deprecated classes. see https://github.com/techdivision/import-cli-simple/blob/master/UPGRADE-4.0.0.md
+
 ## Bugfixes
 
 * Fix fallback for attribute_group_sort_order when empty
@@ -10,7 +14,7 @@
 
 * Fix missing import attribute_group_sort_order
 
-## Features
+* ## Features
 
 * None
 

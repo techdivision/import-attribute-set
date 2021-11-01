@@ -16,7 +16,7 @@ namespace TechDivision\Import\Attribute\Set\Observers;
 
 use TechDivision\Import\Attribute\Set\Utils\ColumnKeys;
 use TechDivision\Import\Attribute\Set\Utils\MemberNames;
-use TechDivision\Import\Utils\EntityStatus;
+use TechDivision\Import\Dbal\Utils\EntityStatus;
 use TechDivision\Import\Attribute\Set\Utils\ConfigurationKeys;
 
 /**

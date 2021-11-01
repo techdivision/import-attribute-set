@@ -23,7 +23,7 @@ use TechDivision\Import\Attribute\Set\Utils\EntityTypeCodes;
 use TechDivision\Import\Attribute\Set\Services\AttributeSetBunchProcessorInterface;
 use TechDivision\Import\Observers\EntityMergers\EntityMergerInterface;
 use TechDivision\Import\Observers\StateDetectorInterface;
-use TechDivision\Import\Utils\EntityStatus;
+use TechDivision\Import\Dbal\Utils\EntityStatus;
 
 /**
  * Observer that create's the EAV attribute group itself.
