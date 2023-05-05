@@ -90,6 +90,13 @@ class AttributeSetBunchProcessor implements AttributeSetBunchProcessorInterface
     protected $rawEntityLoader;
 
     /**
+     * The EAV attribute option repository instance
+     *
+     * @var \TechDivision\Import\Attribute\Set\Repositories\EntityAttributeRepositoryInterface
+     */
+    protected $entityAttributeRepository;
+
+    /**
      * Initialize the processor with the necessary repository and action instances.
      *
      * @param \TechDivision\Import\Dbal\Connection\ConnectionInterface                             $connection                  The connection to use

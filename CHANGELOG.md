@@ -1,3 +1,8 @@
+# Version 17.0.1
+## Bugfixes
+
+* Start fix php8.2 deprecated warnings
+
 # Version 17.0.0
 
 ## Features
