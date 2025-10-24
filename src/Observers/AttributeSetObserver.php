@@ -68,9 +68,9 @@ class AttributeSetObserver extends AbstractAttributeSetObserver implements Dynam
      */
     public function __construct(
         AttributeSetBunchProcessorInterface $attributeSetBunchProcessor,
-        AttributeLoaderInterface $attributeLoader = null,
-        EntityMergerInterface $entityMerger = null,
-        StateDetectorInterface $stateDetector = null
+        ?AttributeLoaderInterface $attributeLoader = null,
+        ?EntityMergerInterface $entityMerger = null,
+        ?StateDetectorInterface $stateDetector = null
     ) {
 
         // set the attribute loader

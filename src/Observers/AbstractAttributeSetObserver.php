@@ -44,7 +44,7 @@ abstract class AbstractAttributeSetObserver extends AbstractObserver
      * @param \TechDivision\Import\Attribute\Services\AttributeBunchProcessorInterface $attributeSetBunchProcessor The attribute set bunch processor instance
      * @param \TechDivision\Import\Observers\StateDetectorInterface|null               $stateDetector              The state detector instance to use
      */
-    public function __construct(AttributeSetBunchProcessorInterface $attributeSetBunchProcessor, StateDetectorInterface $stateDetector = null)
+    public function __construct(AttributeSetBunchProcessorInterface $attributeSetBunchProcessor, ?StateDetectorInterface $stateDetector = null)
     {
 
         // set the attribute set bunch processor instance
