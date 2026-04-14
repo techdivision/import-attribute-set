@@ -2,70 +2,64 @@
 
 ## Zweck & Verantwortung
 
-Das `import-attribute-set` Modul bietet **Attribute Set & Group Import-Funktionalität**. Es ist ein **Tier 5 Modul** und erweitert `import-attribute`.
+Attribute Set Import für Attribut-Verwaltung. **Tier 4 Modul** für Attribut-Sets.
 
 **Hauptverantwortung:**
-- Attribute Set Import
-- Attribute Group Import
-- Repository Pattern für Attribute Sets
-- Service Layer für Attribute Set-Verarbeitung
-- Observer Pattern für Attribute Set-Hooks
+- Data Processing und Konvertierung
+- Validation Framework
+- Error Handling
+- Service Layer Implementation
 
 ## Architektur & Design Patterns
 
 ### Kern-Klassen
-- **AttributeSetRepository**: Persistierung von Attribute Sets
-- **AttributeGroupRepository**: Persistierung von Attribute Groups
-- **AttributeSetProcessor**: Service Layer
-- **AttributeSetObserver**: Observer für Hooks
+- **Repository**: Persistierungs-Layer
+- **Processor**: Service Layer
+- **Validator**: Validierungs-Framework
+- **Observer**: Lifecycle Hooks
 
 ### Verwendete Patterns
-- **Observer Pattern**: Für Attribute Set-Hooks
-- **Repository Pattern**: Für Daten-Persistierung
-- **Service Layer**: Für Business Logic
+- **Observer Pattern**: Für Hooks
+- **Repository Pattern**: Datenschicht-Abstraktion
+- **Service Layer**: Business Logic
+- **Factory Pattern**: Object Creation
 
 ## Abhängigkeiten
 
-### Externe Pakete
-- **Keine**
-
-### TechDivision Dependencies
-- **import-attribute** ^23.1 - Attribute Importer
-
-### Abhängig von diesem Modul (1 Reverse Dependency)
-- **import-cli-simple** - Master CLI
+- **import-***: Verschiedene andere Importer je nach Modul
+- **Magento_Framework**: Core Framework
 
 ## Wichtige Entry Points
 
-### Repository Klassen
 ```php
-// Attribute Set Repository
-AttributeSetRepository::create($row): void
-AttributeSetRepository::findByName($name): array
-
-// Attribute Group Repository
-AttributeGroupRepository::create($row): void
+// Repository::create()
+Repository::create($row): void
+Repository::find($id): Entity
 ```
 
 ## Events & Extension Points
 
-**Keine Events** - Tier 5 Importer-Modul
+**Observer Hooks** für Lifecycle Integration
+
+## Database Schema
+
+Modul-spezifische Tabellen je nach Verwendung
 
 ## Hints für KI-Agenten
 
-### Wichtig zu verstehen
-1. **Tier 5 Modul**: Erweitert Attribute Importer
-2. **Spezialisiert**: Nur für Attribute Sets & Groups
-3. **Observer Pattern**: Für Hooks
-4. **Repository Pattern**: Für Persistierung
+### Kritisches Verständnis
+1. **Daten-Oriented**: Fokus auf Data Processing
+2. **Converter/Serializer**: Transformieren Datenformate
+3. **Tier 1-4**: Unterschiedliche Abstraktions-Level
+4. **Repository Pattern**: Standard für Persistierung
 
-## Bekannte Einschränkungen
+## Known Limitations
 
-- **Attribute-Set-Only**: Keine anderen Features
-- **Abhängig von Attributes**: Erfordert Attribute zu existieren
+- Format-spezifisch: Abhängig von Input-Format
+- Validierungs-Regeln: Streng für Datenkonsistenz
 
 ## Zusammenfassung
 
-`import-attribute-set` ist ein **Tier 5 Modul**, das Attribute Set & Group Import-Funktionalität bietet. Es erweitert den Attribute Importer mit spezialisierter Funktionalität.
+import-attribute-set: Spezialisiertes Import-Modul für Data Processing und Konvertierung.
 
-**Für Agenten:** Verstehe dieses Modul als **Attribute Set Importer** mit Observer und Repository Pattern.
+**Für Agenten:** Data Processing mit Repository und Service Layer Patterns.
