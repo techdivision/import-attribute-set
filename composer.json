@@ -3,8 +3,8 @@
     "description": "Pacemaker library providing basic Magento 2 attribute set + group import functionality",
     "license": "MIT",
     "require": {
-        "php": "^8.1",
-        "techdivision/import-attribute": "^23.1"
+        "php": "^8.3",
+        "techdivision/import-attribute": "^23.2"
     },
     "require-dev": {
         "doctrine/dbal": "^4.0.4",
